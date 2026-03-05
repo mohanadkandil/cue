@@ -1,0 +1,784 @@
+{
+  "agents": [
+    {
+      "id": "agent-01",
+      "name": "Elena Rodriguez",
+      "age": 34,
+      "occupation": "Café Owner",
+      "location": "Zurich",
+      "avatar": "👩‍💼",
+      "bio": "Runs a small café in the old town. Values community and local business. Moved from Barcelona 8 years ago.",
+      "personality": {
+        "openness": 72,
+        "agreeableness": 85,
+        "extraversion": 78,
+        "neuroticism": 35,
+        "conscientiousness": 80
+      },
+      "biases": ["supports local business", "skeptical of big tech", "values personal relationships"],
+      "interests": ["coffee", "community events", "sustainable sourcing"],
+      "social_style": "connector",
+      "relationships": {
+        "relatives": ["agent-02"],
+        "close_friends": ["agent-05", "agent-12"],
+        "acquaintances": ["agent-08", "agent-15", "agent-22"],
+        "colleagues": []
+      },
+      "currently": "Planning a community event at the café for next month"
+    },
+    {
+      "id": "agent-02",
+      "name": "Marco Rodriguez",
+      "age": 31,
+      "occupation": "Software Engineer",
+      "location": "Zurich",
+      "avatar": "👨‍💻",
+      "bio": "Elena's younger brother. Works at a fintech startup. Early adopter of new technologies.",
+      "personality": {
+        "openness": 88,
+        "agreeableness": 60,
+        "extraversion": 55,
+        "neuroticism": 45,
+        "conscientiousness": 70
+      },
+      "biases": ["loves new technology", "price-conscious", "values efficiency"],
+      "interests": ["programming", "gadgets", "cryptocurrency", "gaming"],
+      "social_style": "analyst",
+      "relationships": {
+        "relatives": ["agent-01"],
+        "close_friends": ["agent-03", "agent-07"],
+        "acquaintances": ["agent-10", "agent-18"],
+        "colleagues": ["agent-04", "agent-09"]
+      },
+      "currently": "Evaluating new productivity tools for the team"
+    },
+    {
+      "id": "agent-03",
+      "name": "Sofia Chen",
+      "age": 28,
+      "occupation": "UX Designer",
+      "location": "Zurich",
+      "avatar": "👩‍🎨",
+      "bio": "Design lead at a small agency. Vocal on social media about design trends. Hosts a design podcast.",
+      "personality": {
+        "openness": 92,
+        "agreeableness": 70,
+        "extraversion": 82,
+        "neuroticism": 40,
+        "conscientiousness": 65
+      },
+      "biases": ["aesthetics matter", "user experience first", "dislikes corporate speak"],
+      "interests": ["design", "podcasting", "art exhibitions", "yoga"],
+      "social_style": "influencer",
+      "relationships": {
+        "relatives": ["agent-14"],
+        "close_friends": ["agent-02", "agent-06"],
+        "acquaintances": ["agent-11", "agent-20", "agent-25"],
+        "colleagues": ["agent-08"]
+      },
+      "currently": "Working on a rebrand project that's been stressful"
+    },
+    {
+      "id": "agent-04",
+      "name": "Lucas Weber",
+      "age": 42,
+      "occupation": "Product Manager",
+      "location": "Basel",
+      "avatar": "👨‍💼",
+      "bio": "15 years in tech. Previously at Google Zurich. Now at the same startup as Marco. Pragmatic decision maker.",
+      "personality": {
+        "openness": 65,
+        "agreeableness": 55,
+        "extraversion": 60,
+        "neuroticism": 30,
+        "conscientiousness": 90
+      },
+      "biases": ["data-driven decisions", "skeptical of hype", "values proven solutions"],
+      "interests": ["hiking", "board games", "wine", "business strategy"],
+      "social_style": "pragmatist",
+      "relationships": {
+        "relatives": ["agent-16"],
+        "close_friends": ["agent-09"],
+        "acquaintances": ["agent-01", "agent-12"],
+        "colleagues": ["agent-02", "agent-09"]
+      },
+      "currently": "Preparing Q2 roadmap and worried about budget cuts"
+    },
+    {
+      "id": "agent-05",
+      "name": "Anna Müller",
+      "age": 38,
+      "occupation": "Journalist",
+      "location": "Zurich",
+      "avatar": "👩‍💻",
+      "bio": "Writes for a local newspaper covering tech and business. Known for investigative pieces on startups.",
+      "personality": {
+        "openness": 80,
+        "agreeableness": 50,
+        "extraversion": 65,
+        "neuroticism": 55,
+        "conscientiousness": 85
+      },
+      "biases": ["questions everything", "values transparency", "dislikes PR spin"],
+      "interests": ["investigative journalism", "politics", "running", "documentaries"],
+      "social_style": "investigator",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-01", "agent-12"],
+        "acquaintances": ["agent-04", "agent-09", "agent-17"],
+        "colleagues": ["agent-19"]
+      },
+      "currently": "Working on a story about SaaS pricing trends"
+    },
+    {
+      "id": "agent-06",
+      "name": "David Park",
+      "age": 26,
+      "occupation": "Marketing Coordinator",
+      "location": "Geneva",
+      "avatar": "👨‍🎤",
+      "bio": "Just started his career. Active on all social platforms. Influences his friend group's opinions on brands.",
+      "personality": {
+        "openness": 85,
+        "agreeableness": 75,
+        "extraversion": 90,
+        "neuroticism": 50,
+        "conscientiousness": 55
+      },
+      "biases": ["trend follower", "brand conscious", "values social proof"],
+      "interests": ["social media", "music festivals", "sneakers", "content creation"],
+      "social_style": "trendsetter",
+      "relationships": {
+        "relatives": ["agent-21"],
+        "close_friends": ["agent-03", "agent-11"],
+        "acquaintances": ["agent-07", "agent-13", "agent-24"],
+        "colleagues": ["agent-17"]
+      },
+      "currently": "Trying to grow his personal brand on LinkedIn"
+    },
+    {
+      "id": "agent-07",
+      "name": "Clara Hoffmann",
+      "age": 45,
+      "occupation": "Financial Advisor",
+      "location": "Zurich",
+      "avatar": "👩‍⚖️",
+      "bio": "Conservative with money, both personally and professionally. Trusted advisor to several small businesses.",
+      "personality": {
+        "openness": 45,
+        "agreeableness": 65,
+        "extraversion": 50,
+        "neuroticism": 25,
+        "conscientiousness": 95
+      },
+      "biases": ["risk-averse", "values stability", "skeptical of subscriptions"],
+      "interests": ["classical music", "gardening", "financial planning", "travel"],
+      "social_style": "advisor",
+      "relationships": {
+        "relatives": ["agent-23"],
+        "close_friends": ["agent-02"],
+        "acquaintances": ["agent-01", "agent-04", "agent-16"],
+        "colleagues": []
+      },
+      "currently": "Advising clients on cost-cutting measures"
+    },
+    {
+      "id": "agent-08",
+      "name": "Noah Schmidt",
+      "age": 33,
+      "occupation": "Freelance Developer",
+      "location": "Bern",
+      "avatar": "🧑‍💻",
+      "bio": "Left corporate life 3 years ago. Works with multiple clients. Very price-sensitive to tools.",
+      "personality": {
+        "openness": 78,
+        "agreeableness": 58,
+        "extraversion": 40,
+        "neuroticism": 60,
+        "conscientiousness": 72
+      },
+      "biases": ["hates vendor lock-in", "prefers open source", "budget conscious"],
+      "interests": ["open source", "remote work", "minimalism", "cycling"],
+      "social_style": "independent",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-10"],
+        "acquaintances": ["agent-01", "agent-02", "agent-09"],
+        "colleagues": ["agent-03"]
+      },
+      "currently": "Considering switching CRM tools due to recent price hikes"
+    },
+    {
+      "id": "agent-09",
+      "name": "Emma Fischer",
+      "age": 36,
+      "occupation": "Engineering Manager",
+      "location": "Zurich",
+      "avatar": "👩‍🔬",
+      "bio": "Manages a team of 12 at the same startup as Marco and Lucas. Practical and team-focused.",
+      "personality": {
+        "openness": 70,
+        "agreeableness": 80,
+        "extraversion": 65,
+        "neuroticism": 35,
+        "conscientiousness": 88
+      },
+      "biases": ["team productivity first", "values reliability", "dislikes disruption"],
+      "interests": ["team dynamics", "sci-fi novels", "cooking", "mentoring"],
+      "social_style": "facilitator",
+      "relationships": {
+        "relatives": ["agent-15"],
+        "close_friends": ["agent-04"],
+        "acquaintances": ["agent-05", "agent-08"],
+        "colleagues": ["agent-02", "agent-04"]
+      },
+      "currently": "Dealing with team burnout after a tough sprint"
+    },
+    {
+      "id": "agent-10",
+      "name": "Oliver Brunner",
+      "age": 29,
+      "occupation": "Startup Founder",
+      "location": "Lausanne",
+      "avatar": "🧑‍🚀",
+      "bio": "Second-time founder. Building a B2B SaaS. Lives and breathes startup culture.",
+      "personality": {
+        "openness": 95,
+        "agreeableness": 55,
+        "extraversion": 85,
+        "neuroticism": 65,
+        "conscientiousness": 60
+      },
+      "biases": ["move fast break things", "network obsessed", "optimistic about tech"],
+      "interests": ["startups", "networking", "pitch competitions", "biohacking"],
+      "social_style": "evangelist",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-08"],
+        "acquaintances": ["agent-02", "agent-03", "agent-17"],
+        "colleagues": ["agent-18"]
+      },
+      "currently": "Fundraising and stressed about runway"
+    },
+    {
+      "id": "agent-11",
+      "name": "Mia Keller",
+      "age": 24,
+      "occupation": "Graduate Student",
+      "location": "Zurich",
+      "avatar": "👩‍🎓",
+      "bio": "Studying computer science at ETH. Active in student organizations. Budget extremely limited.",
+      "personality": {
+        "openness": 88,
+        "agreeableness": 78,
+        "extraversion": 72,
+        "neuroticism": 58,
+        "conscientiousness": 75
+      },
+      "biases": ["student budget", "values free tiers", "influenced by peers"],
+      "interests": ["AI research", "student life", "photography", "sustainable fashion"],
+      "social_style": "learner",
+      "relationships": {
+        "relatives": ["agent-26"],
+        "close_friends": ["agent-06", "agent-13"],
+        "acquaintances": ["agent-03", "agent-20"],
+        "colleagues": []
+      },
+      "currently": "Working on thesis and looking for internships"
+    },
+    {
+      "id": "agent-12",
+      "name": "Liam O'Connor",
+      "age": 52,
+      "occupation": "Restaurant Owner",
+      "location": "Zurich",
+      "avatar": "👨‍🍳",
+      "bio": "Irish expat, owns a popular pub. Friends with Elena. Traditional in business but open-minded personally.",
+      "personality": {
+        "openness": 60,
+        "agreeableness": 85,
+        "extraversion": 88,
+        "neuroticism": 30,
+        "conscientiousness": 70
+      },
+      "biases": ["relationship-focused", "word of mouth believer", "tech skeptic"],
+      "interests": ["hospitality", "rugby", "Irish music", "community"],
+      "social_style": "host",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-01", "agent-05"],
+        "acquaintances": ["agent-04", "agent-07", "agent-22"],
+        "colleagues": []
+      },
+      "currently": "Considering whether to invest in a new POS system"
+    },
+    {
+      "id": "agent-13",
+      "name": "Zoe Andersson",
+      "age": 27,
+      "occupation": "Content Creator",
+      "location": "Geneva",
+      "avatar": "🧑‍🎤",
+      "bio": "Full-time YouTuber with 50k subscribers. Reviews tech products. Opinions influence her audience.",
+      "personality": {
+        "openness": 90,
+        "agreeableness": 65,
+        "extraversion": 88,
+        "neuroticism": 55,
+        "conscientiousness": 58
+      },
+      "biases": ["authenticity matters", "hates sponsored content feel", "early adopter"],
+      "interests": ["content creation", "tech reviews", "travel vlogging", "gaming"],
+      "social_style": "broadcaster",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-11"],
+        "acquaintances": ["agent-06", "agent-10", "agent-20"],
+        "colleagues": []
+      },
+      "currently": "Planning a video about SaaS tools for creators"
+    },
+    {
+      "id": "agent-14",
+      "name": "Wei Chen",
+      "age": 58,
+      "occupation": "University Professor",
+      "location": "Zurich",
+      "avatar": "👨‍🏫",
+      "bio": "Sofia's father. Computer science professor at ETH. Respected voice in tech academia.",
+      "personality": {
+        "openness": 75,
+        "agreeableness": 70,
+        "extraversion": 45,
+        "neuroticism": 25,
+        "conscientiousness": 92
+      },
+      "biases": ["evidence-based", "long-term thinking", "values privacy"],
+      "interests": ["research", "mentoring", "chess", "Chinese calligraphy"],
+      "social_style": "sage",
+      "relationships": {
+        "relatives": ["agent-03"],
+        "close_friends": [],
+        "acquaintances": ["agent-04", "agent-09"],
+        "colleagues": ["agent-28"]
+      },
+      "currently": "Writing a paper on algorithmic fairness"
+    },
+    {
+      "id": "agent-15",
+      "name": "Luna Fischer",
+      "age": 32,
+      "occupation": "HR Manager",
+      "location": "Zurich",
+      "avatar": "👩‍💼",
+      "bio": "Emma's sister. Works at a large corporation. Deals with employee tools and software decisions.",
+      "personality": {
+        "openness": 65,
+        "agreeableness": 82,
+        "extraversion": 70,
+        "neuroticism": 40,
+        "conscientiousness": 85
+      },
+      "biases": ["employee experience focused", "change management aware", "values support"],
+      "interests": ["people management", "workplace culture", "pilates", "interior design"],
+      "social_style": "mediator",
+      "relationships": {
+        "relatives": ["agent-09"],
+        "close_friends": ["agent-22"],
+        "acquaintances": ["agent-01", "agent-07"],
+        "colleagues": ["agent-27"]
+      },
+      "currently": "Rolling out new HR software and facing resistance"
+    },
+    {
+      "id": "agent-16",
+      "name": "Felix Weber",
+      "age": 19,
+      "occupation": "Apprentice",
+      "location": "Basel",
+      "avatar": "🧑‍🔧",
+      "bio": "Lucas's nephew. Doing an apprenticeship in IT. Gen Z perspective on everything.",
+      "personality": {
+        "openness": 82,
+        "agreeableness": 68,
+        "extraversion": 75,
+        "neuroticism": 52,
+        "conscientiousness": 55
+      },
+      "biases": ["mobile-first", "hates email", "expects free", "TikTok native"],
+      "interests": ["gaming", "TikTok", "streetwear", "electric scooters"],
+      "social_style": "native",
+      "relationships": {
+        "relatives": ["agent-04"],
+        "close_friends": ["agent-24"],
+        "acquaintances": ["agent-07", "agent-11"],
+        "colleagues": []
+      },
+      "currently": "Trying to convince his team to use Discord instead of Slack"
+    },
+    {
+      "id": "agent-17",
+      "name": "Stella Rossi",
+      "age": 41,
+      "occupation": "Marketing Director",
+      "location": "Geneva",
+      "avatar": "👩‍💼",
+      "bio": "Runs marketing at a mid-size company. Controls significant software budget. Strategic thinker.",
+      "personality": {
+        "openness": 72,
+        "agreeableness": 58,
+        "extraversion": 78,
+        "neuroticism": 45,
+        "conscientiousness": 88
+      },
+      "biases": ["ROI focused", "brand reputation matters", "enterprise mindset"],
+      "interests": ["brand strategy", "tennis", "wine collecting", "leadership"],
+      "social_style": "executive",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-05", "agent-10"],
+        "colleagues": ["agent-06", "agent-27"]
+      },
+      "currently": "Reviewing marketing stack for potential consolidation"
+    },
+    {
+      "id": "agent-18",
+      "name": "Max Huber",
+      "age": 35,
+      "occupation": "Sales Lead",
+      "location": "Lausanne",
+      "avatar": "👨‍💼",
+      "bio": "Works with Oliver at his startup. Relationship-driven salesperson. On the phone constantly.",
+      "personality": {
+        "openness": 68,
+        "agreeableness": 75,
+        "extraversion": 92,
+        "neuroticism": 48,
+        "conscientiousness": 72
+      },
+      "biases": ["relationships over features", "CRM dependent", "hates friction"],
+      "interests": ["networking", "golf", "cars", "podcasts"],
+      "social_style": "networker",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-02", "agent-04"],
+        "colleagues": ["agent-10"]
+      },
+      "currently": "Frustrated with current CRM's mobile app"
+    },
+    {
+      "id": "agent-19",
+      "name": "Ivy Nguyen",
+      "age": 30,
+      "occupation": "Data Journalist",
+      "location": "Zurich",
+      "avatar": "👩‍💻",
+      "bio": "Works with Anna at the newspaper. Specializes in data visualization and analysis.",
+      "personality": {
+        "openness": 85,
+        "agreeableness": 62,
+        "extraversion": 55,
+        "neuroticism": 50,
+        "conscientiousness": 90
+      },
+      "biases": ["data tells the truth", "visual communication", "precision matters"],
+      "interests": ["data viz", "statistics", "true crime podcasts", "bouldering"],
+      "social_style": "analyst",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-03", "agent-08"],
+        "colleagues": ["agent-05"]
+      },
+      "currently": "Building a dashboard to track tech layoffs"
+    },
+    {
+      "id": "agent-20",
+      "name": "Oscar Lindqvist",
+      "age": 48,
+      "occupation": "IT Director",
+      "location": "Zurich",
+      "avatar": "👨‍💼",
+      "bio": "Runs IT for a 200-person company. Gatekeeper for all software purchases. Security-focused.",
+      "personality": {
+        "openness": 50,
+        "agreeableness": 55,
+        "extraversion": 48,
+        "neuroticism": 38,
+        "conscientiousness": 95
+      },
+      "biases": ["security first", "vendor consolidation", "hates shadow IT", "compliance aware"],
+      "interests": ["cybersecurity", "sailing", "home automation", "woodworking"],
+      "social_style": "gatekeeper",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-03", "agent-11", "agent-13"],
+        "colleagues": ["agent-27"]
+      },
+      "currently": "Auditing all SaaS subscriptions for security compliance"
+    },
+    {
+      "id": "agent-21",
+      "name": "Ruby Park",
+      "age": 55,
+      "occupation": "Small Business Owner",
+      "location": "Geneva",
+      "avatar": "👩‍🦳",
+      "bio": "David's mother. Runs a boutique clothing store. Not tech-savvy but trying to modernize.",
+      "personality": {
+        "openness": 55,
+        "agreeableness": 88,
+        "extraversion": 72,
+        "neuroticism": 45,
+        "conscientiousness": 78
+      },
+      "biases": ["personal service matters", "confused by tech", "trusts son's advice"],
+      "interests": ["fashion", "community", "Korean cooking", "book club"],
+      "social_style": "traditionalist",
+      "relationships": {
+        "relatives": ["agent-06"],
+        "close_friends": ["agent-22"],
+        "acquaintances": ["agent-01", "agent-12"],
+        "colleagues": []
+      },
+      "currently": "Trying to set up an online store with David's help"
+    },
+    {
+      "id": "agent-22",
+      "name": "Hazel Thompson",
+      "age": 50,
+      "occupation": "Accountant",
+      "location": "Zurich",
+      "avatar": "👩‍💼",
+      "bio": "Runs her own accounting practice. Serves many small businesses including Elena's café.",
+      "personality": {
+        "openness": 48,
+        "agreeableness": 72,
+        "extraversion": 55,
+        "neuroticism": 32,
+        "conscientiousness": 98
+      },
+      "biases": ["cost-conscious", "reliability essential", "hates learning new software"],
+      "interests": ["numbers", "gardening", "mystery novels", "baking"],
+      "social_style": "conservative",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-15", "agent-21"],
+        "acquaintances": ["agent-01", "agent-12"],
+        "colleagues": []
+      },
+      "currently": "Dreading upcoming software migration her vendor announced"
+    },
+    {
+      "id": "agent-23",
+      "name": "Kai Hoffmann",
+      "age": 22,
+      "occupation": "Junior Developer",
+      "location": "Zurich",
+      "avatar": "🧑‍💻",
+      "bio": "Clara's son. Just started first dev job. Eager to prove himself. Active on Twitter/tech communities.",
+      "personality": {
+        "openness": 90,
+        "agreeableness": 70,
+        "extraversion": 65,
+        "neuroticism": 58,
+        "conscientiousness": 68
+      },
+      "biases": ["shiny new tools", "dev experience matters", "hates legacy code"],
+      "interests": ["coding", "tech Twitter", "mechanical keyboards", "anime"],
+      "social_style": "enthusiast",
+      "relationships": {
+        "relatives": ["agent-07"],
+        "close_friends": ["agent-24"],
+        "acquaintances": ["agent-02", "agent-08", "agent-11"],
+        "colleagues": []
+      },
+      "currently": "Advocating for new tools at work but getting pushback"
+    },
+    {
+      "id": "agent-24",
+      "name": "Aurora Silva",
+      "age": 20,
+      "occupation": "Intern",
+      "location": "Basel",
+      "avatar": "👩‍🎓",
+      "bio": "Design intern. Friends with Felix and Kai. Digital native with strong opinions about UX.",
+      "personality": {
+        "openness": 88,
+        "agreeableness": 75,
+        "extraversion": 78,
+        "neuroticism": 55,
+        "conscientiousness": 62
+      },
+      "biases": ["aesthetics obsessed", "mobile native", "sustainability conscious"],
+      "interests": ["design", "sustainable fashion", "plant care", "thrift shopping"],
+      "social_style": "creative",
+      "relationships": {
+        "relatives": [],
+        "close_friends": ["agent-16", "agent-23"],
+        "acquaintances": ["agent-06", "agent-11", "agent-13"],
+        "colleagues": []
+      },
+      "currently": "Building her portfolio for job applications"
+    },
+    {
+      "id": "agent-25",
+      "name": "Finn McCarthy",
+      "age": 39,
+      "occupation": "Operations Manager",
+      "location": "Zurich",
+      "avatar": "👨‍💼",
+      "bio": "Keeps things running at a logistics company. Process-oriented. Values tools that just work.",
+      "personality": {
+        "openness": 55,
+        "agreeableness": 68,
+        "extraversion": 58,
+        "neuroticism": 42,
+        "conscientiousness": 92
+      },
+      "biases": ["reliability over features", "hates downtime", "integration matters"],
+      "interests": ["process optimization", "cycling", "craft beer", "board games"],
+      "social_style": "operator",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-03", "agent-04", "agent-09"],
+        "colleagues": ["agent-27"]
+      },
+      "currently": "Evaluating whether to switch logistics software"
+    },
+    {
+      "id": "agent-26",
+      "name": "Nora Keller",
+      "age": 56,
+      "occupation": "Doctor",
+      "location": "Zurich",
+      "avatar": "👩‍⚕️",
+      "bio": "Mia's mother. General practitioner with her own practice. Values privacy extremely highly.",
+      "personality": {
+        "openness": 62,
+        "agreeableness": 78,
+        "extraversion": 55,
+        "neuroticism": 35,
+        "conscientiousness": 95
+      },
+      "biases": ["privacy paramount", "compliance required", "patient trust first"],
+      "interests": ["medicine", "classical music", "hiking", "reading"],
+      "social_style": "professional",
+      "relationships": {
+        "relatives": ["agent-11"],
+        "close_friends": [],
+        "acquaintances": ["agent-07", "agent-14"],
+        "colleagues": []
+      },
+      "currently": "Worried about data privacy in new practice management software"
+    },
+    {
+      "id": "agent-27",
+      "name": "Atlas Petrov",
+      "age": 44,
+      "occupation": "CTO",
+      "location": "Zurich",
+      "avatar": "👨‍💻",
+      "bio": "CTO at a scale-up. Makes big technology decisions. Connected to multiple enterprise buyers.",
+      "personality": {
+        "openness": 75,
+        "agreeableness": 52,
+        "extraversion": 68,
+        "neuroticism": 40,
+        "conscientiousness": 85
+      },
+      "biases": ["scalability matters", "technical debt aware", "vendor relationships"],
+      "interests": ["architecture", "leadership", "mountain biking", "whiskey"],
+      "social_style": "decision-maker",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-04", "agent-09", "agent-10"],
+        "colleagues": ["agent-15", "agent-17", "agent-20", "agent-25"]
+      },
+      "currently": "Planning infrastructure migration to reduce costs"
+    },
+    {
+      "id": "agent-28",
+      "name": "Iris Yamamoto",
+      "age": 35,
+      "occupation": "Research Scientist",
+      "location": "Zurich",
+      "avatar": "👩‍🔬",
+      "bio": "Works at ETH with Professor Chen. Uses many specialized tools. Frustrated by enterprise pricing.",
+      "personality": {
+        "openness": 92,
+        "agreeableness": 65,
+        "extraversion": 45,
+        "neuroticism": 55,
+        "conscientiousness": 88
+      },
+      "biases": ["academic pricing expected", "open science advocate", "hates paywalls"],
+      "interests": ["research", "open source", "origami", "tea ceremony"],
+      "social_style": "specialist",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-08", "agent-11"],
+        "colleagues": ["agent-14"]
+      },
+      "currently": "Looking for alternatives to expensive research tools"
+    },
+    {
+      "id": "agent-29",
+      "name": "Jasper van den Berg",
+      "age": 61,
+      "occupation": "Board Advisor",
+      "location": "Geneva",
+      "avatar": "👨‍💼",
+      "bio": "Semi-retired executive. Sits on three boards. Old-school but respected for experience.",
+      "personality": {
+        "openness": 45,
+        "agreeableness": 60,
+        "extraversion": 65,
+        "neuroticism": 25,
+        "conscientiousness": 82
+      },
+      "biases": ["proven track record matters", "relationships first", "risk-averse"],
+      "interests": ["golf", "fine dining", "art collecting", "mentoring"],
+      "social_style": "elder",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-07", "agent-14", "agent-17"],
+        "colleagues": []
+      },
+      "currently": "Advising a startup on their pricing strategy"
+    },
+    {
+      "id": "agent-30",
+      "name": "Violet Okonkwo",
+      "age": 28,
+      "occupation": "Customer Success Manager",
+      "location": "Zurich",
+      "avatar": "👩‍💼",
+      "bio": "Works at a SaaS company. Sees customer reactions to pricing changes firsthand. Empathetic advocate.",
+      "personality": {
+        "openness": 78,
+        "agreeableness": 90,
+        "extraversion": 82,
+        "neuroticism": 48,
+        "conscientiousness": 80
+      },
+      "biases": ["customer empathy", "retention focused", "hates surprising customers"],
+      "interests": ["customer advocacy", "podcasts", "African cuisine", "dancing"],
+      "social_style": "advocate",
+      "relationships": {
+        "relatives": [],
+        "close_friends": [],
+        "acquaintances": ["agent-03", "agent-06", "agent-18"],
+        "colleagues": []
+      },
+      "currently": "Bracing for customer backlash after a recent price increase"
+    }
+  ]
+}
