@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Zap, Map, TrendingUp, Settings } from 'lucide-react';
+import { Zap, Map, TrendingUp, Settings, Share2 } from 'lucide-react';
 
 const NAV_ITEMS = [
+  { href: '/graph', label: 'Graph', icon: Share2 },
   { href: '/map', label: 'Map', icon: Map },
   { href: '/dashboard', label: 'Dashboard', icon: TrendingUp },
   { href: '/settings', label: 'Settings', icon: Settings },
