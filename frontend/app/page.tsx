@@ -1,100 +1,113 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import TopBar from '@/components/TopBar';
-import GraphCanvas from '@/components/GraphCanvas';
-import Sidebar from '@/components/Sidebar';
-import EventInjector from '@/components/EventInjector';
-import LiveFeed from '@/components/LiveFeed';
-import SentimentChart from '@/components/SentimentChart';
-import AgentModal from '@/components/AgentModal';
-import {
-  mockAgents,
-  mockGraphData,
-  mockFeedEvents,
-  getSentimentCounts,
-  generateGraphData,
-  ExtendedFeedEvent,
-} from '@/lib/mockData';
-import { Agent, Sentiment } from '@/lib/types';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Zap, Lightbulb, Users, Play } from 'lucide-react';
 
-export default function Home() {
-  const [agents, setAgents] = useState(mockAgents);
-  const [graphData, setGraphData] = useState(mockGraphData);
-  const [feedEvents, setFeedEvents] = useState<ExtendedFeedEvent[]>(mockFeedEvents);
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+const SUGGESTIONS = [
+  'Add AI copilot',
+  'Remove free tier',
+  'Redesign onboarding',
+  'Launch mobile app',
+];
 
-  const sentimentCounts = getSentimentCounts(agents);
+export default function InputPage() {
+  const router = useRouter();
+  const [featureText, setFeatureText] = useState('');
+  const [isRunning, setIsRunning] = useState(false);
 
-  const handleNodeClick = useCallback((nodeId: string) => {
-    const agent = agents.find(a => a.id === nodeId);
-    if (agent) {
-      setSelectedAgent(agent);
-    }
-  }, [agents]);
+  const handleRun = async () => {
+    if (!featureText.trim()) return;
 
-  const handleCloseModal = useCallback(() => {
-    setSelectedAgent(null);
-  }, []);
+    setIsRunning(true);
+    // Store the feature in sessionStorage for the output page
+    sessionStorage.setItem('agentsim_feature', featureText);
 
-  const handleInjectEvent = useCallback((eventText: string) => {
-    const sentiments: Sentiment[] = ['positive', 'negative', 'neutral'];
-    const numAffected = Math.floor(Math.random() * 5) + 3;
-    const affectedIndices = new Set<number>();
+    // Navigate to the output/results page
+    router.push('/output');
+  };
 
-    while (affectedIndices.size < numAffected) {
-      affectedIndices.add(Math.floor(Math.random() * agents.length));
-    }
-
-    const updatedAgents = agents.map((agent, index) => {
-      if (affectedIndices.has(index)) {
-        const newSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
-        return { ...agent, sentiment: newSentiment };
-      }
-      return agent;
-    });
-
-    setAgents(updatedAgents);
-    setGraphData(generateGraphData(updatedAgents));
-
-    const randomAgent = updatedAgents[Math.floor(Math.random() * updatedAgents.length)];
-    const friendId = randomAgent.friends[0];
-    const friend = updatedAgents.find(a => a.id === friendId);
-
-    const types = ['share', 'influence', 'discuss'] as const;
-    const type = types[Math.floor(Math.random() * types.length)];
-
-    const newEvent: ExtendedFeedEvent = {
-      id: `event-${Date.now()}`,
-      timestamp: new Date(),
-      message: `${randomAgent.name} reacted to event`,
-      agentId: randomAgent.id,
-      agentAvatar: randomAgent.avatar,
-      type,
-      agent1Name: randomAgent.name,
-      agent2Name: friend?.name || 'someone',
-    };
-
-    setFeedEvents(prev => [newEvent, ...prev.slice(0, 19)]);
-  }, [agents]);
+  const handleSuggestion = (suggestion: string) => {
+    setFeatureText(suggestion);
+  };
 
   return (
-    <div className="h-screen flex flex-col bg-background">
-      <TopBar />
+    <div className="min-h-screen flex items-center justify-center p-5">
+      <div className="w-full max-w-[680px] flex flex-col items-center gap-10">
+        {/* Top Section */}
+        <div className="flex flex-col items-center gap-4 w-full">
+          {/* Logo */}
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-sage rounded-[10px] flex items-center justify-center">
+              <Zap className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-display text-[22px] font-medium text-text">
+              AgentSim
+            </span>
+          </div>
 
-      <div className="flex-1 flex overflow-hidden">
-        <GraphCanvas graphData={graphData} onNodeClick={handleNodeClick} />
+          {/* Headline */}
+          <h1 className="font-display text-[44px] font-medium text-text text-center leading-[1.15] tracking-[-1px]">
+            What feature will you ship next?
+          </h1>
 
-        <Sidebar>
-          <EventInjector onInject={handleInjectEvent} />
-          <SentimentChart counts={sentimentCounts} />
-          <LiveFeed events={feedEvents} />
-        </Sidebar>
+          {/* Subtitle */}
+          <p className="text-base text-text-secondary text-center leading-relaxed max-w-[520px]">
+            Describe your feature and watch thousands of AI agents react in real-time.
+            <br />
+            See what your users will think before you write a single line of code.
+          </p>
+        </div>
+
+        {/* Input Card */}
+        <div className="w-full bg-surface rounded-[16px] p-6 border border-border shadow-[0_4px_30px_#00000006] flex flex-col gap-4">
+          <textarea
+            value={featureText}
+            onChange={(e) => setFeatureText(e.target.value)}
+            className="w-full bg-background rounded-[12px] border border-border p-4 px-5 text-[15px] text-text-secondary leading-relaxed resize-none outline-none min-h-[80px] placeholder:text-text-secondary"
+            rows={3}
+            placeholder="We will add dark mode support with custom themes and a palette editor so users can personalize their workspace..."
+          />
+
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            {/* Hints */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="pill pill-sage">
+                <Lightbulb className="w-3 h-3 text-sage" />
+                Be specific
+              </span>
+              <span className="pill pill-curious">
+                <Users className="w-3 h-3 text-curious" />
+                2,847 agents ready
+              </span>
+            </div>
+
+            {/* Run Button */}
+            <button
+              onClick={handleRun}
+              disabled={isRunning || !featureText.trim()}
+              className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Play className="w-4 h-4" />
+              <span>{isRunning ? 'Starting...' : 'Run Simulation'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Suggestions */}
+        <div className="flex items-center gap-2 flex-wrap justify-center">
+          <span className="text-xs font-medium text-text-muted">Try:</span>
+          {SUGGESTIONS.map((suggestion) => (
+            <button
+              key={suggestion}
+              onClick={() => handleSuggestion(suggestion)}
+              className="inline-flex items-center rounded-[8px] px-3 py-1.5 border border-border bg-transparent text-xs text-text-secondary cursor-pointer whitespace-nowrap hover:bg-background transition-colors"
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
       </div>
-
-      {selectedAgent && (
-        <AgentModal agent={selectedAgent} onClose={handleCloseModal} />
-      )}
     </div>
   );
 }

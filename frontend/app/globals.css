@@ -1,31 +1,59 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FFFDF9;
+  /* Background */
+  --color-background: #F7F6F3;
   --color-surface: #FFFFFF;
-  --color-surface-alt: #FAF8F5;
+  --color-surface-alt: #FAFAF8;
 
-  --color-primary: #1A1A1A;
-  --color-primary-hover: #333333;
+  /* Brand Colors */
+  --color-sage: #7C9070;
+  --color-sage-dark: #4A5D43;
+  --color-sage-light: rgba(124, 144, 112, 0.08);
 
-  --color-positive: #16A34A;
-  --color-negative: #DC2626;
-  --color-neutral: #9CA3AF;
+  /* Semantic Colors */
+  --color-positive: #22C55E;
+  --color-curious: #5B9BD5;
+  --color-skeptical: #D4845E;
+  --color-negative: #EF4444;
+  --color-neutral: #9B8AA8;
+  --color-taupe: #C9B8A8;
 
-  --color-border: #E8E4DE;
-
-  --color-text: #1A1A1A;
+  /* Text Colors */
+  --color-text: #2D2D2D;
   --color-text-secondary: #6B6B6B;
-  --color-text-muted: #9CA3AF;
+  --color-text-muted: #8E8E93;
+
+  /* Border */
+  --color-border: #F0EFEC;
+  --color-border-dark: #E5E4E1;
+
+  /* Shadows */
+  --shadow-card: 0 4px 30px #00000006;
+  --shadow-button: 0 2px 20px #00000008;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-default: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+
+  /* Font Families */
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-text);
-  overflow: hidden;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Animation */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
@@ -35,6 +63,7 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -46,4 +75,100 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 3px;
+}
+
+/* Typography utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Common card styles */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+/* Pill/Badge utilities */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.pill-sage {
+  background: var(--color-sage-light);
+  color: var(--color-sage-dark);
+}
+
+.pill-curious {
+  background: rgba(91, 155, 213, 0.08);
+  color: #5B9BD5;
+}
+
+.pill-skeptical {
+  background: rgba(212, 132, 94, 0.08);
+  color: #D4845E;
+}
+
+.pill-neutral {
+  background: rgba(155, 138, 168, 0.08);
+  color: #9B8AA8;
+}
+
+/* Button styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-sage);
+  border: none;
+  border-radius: var(--radius-default);
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-sage-dark);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-default);
+  padding: 11px 24px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: background 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--color-background);
 }
