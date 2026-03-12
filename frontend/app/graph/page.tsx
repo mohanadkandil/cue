@@ -17,31 +17,31 @@ const COLORS = {
 
 // 25 Smallville personas
 const AGENTS: AgentNode[] = [
-  { id: 'isabella-rodriguez', name: 'Isabella Rodriguez', color: COLORS.cafe, activity: 'Planning Valentine\'s party', sentiment: 'positive', location: 'Hobbs Cafe' },
-  { id: 'maria-lopez', name: 'Maria Lopez', color: COLORS.college, activity: 'Studying physics & streaming', sentiment: 'curious', location: 'Oak Hill College' },
-  { id: 'klaus-mueller', name: 'Klaus Mueller', color: COLORS.college, activity: 'Writing research paper', sentiment: 'curious', location: 'Oak Hill College' },
-  { id: 'ayesha-khan', name: 'Ayesha Khan', color: COLORS.college, activity: 'Senior thesis research', sentiment: 'curious', location: 'Oak Hill College' },
-  { id: 'wolfgang-schulz', name: 'Wolfgang Schulz', color: COLORS.college, activity: 'Training & studying', sentiment: 'positive', location: 'Oak Hill College' },
-  { id: 'abigail-chen', name: 'Abigail Chen', color: COLORS.coliving, activity: 'Animation project', sentiment: 'positive', location: 'Artist Co-living' },
-  { id: 'francisco-lopez', name: 'Francisco Lopez', color: COLORS.coliving, activity: 'Web series project', sentiment: 'positive', location: 'Artist Co-living' },
-  { id: 'hailey-johnson', name: 'Hailey Johnson', color: COLORS.coliving, activity: 'Writing novel', sentiment: 'curious', location: 'Artist Co-living' },
-  { id: 'latoya-williams', name: 'Latoya Williams', color: COLORS.coliving, activity: 'Photography series', sentiment: 'positive', location: 'Artist Co-living' },
-  { id: 'rajiv-patel', name: 'Rajiv Patel', color: COLORS.coliving, activity: 'Preparing solo show', sentiment: 'positive', location: 'Artist Co-living' },
-  { id: 'john-lin', name: 'John Lin', color: COLORS.pharmacy, activity: 'Shop keeping pharmacy', sentiment: 'neutral', location: 'Willow Market' },
-  { id: 'tom-moreno', name: 'Tom Moreno', color: COLORS.pharmacy, activity: 'Managing store', sentiment: 'negative', location: 'Willow Market' },
-  { id: 'eddy-lin', name: 'Eddy Lin', color: COLORS.family, activity: 'Music composition', sentiment: 'curious', location: 'Lin Family House' },
-  { id: 'mei-lin', name: 'Mei Lin', color: COLORS.family, activity: 'Teaching philosophy', sentiment: 'positive', location: 'Lin Family House' },
-  { id: 'jane-moreno', name: 'Jane Moreno', color: COLORS.family, activity: 'At home', sentiment: 'neutral', location: 'Moreno House' },
-  { id: 'sam-moore', name: 'Sam Moore', color: COLORS.family, activity: 'Running for mayor', sentiment: 'positive', location: 'Moore House' },
-  { id: 'jennifer-moore', name: 'Jennifer Moore', color: COLORS.family, activity: 'Preparing exhibition', sentiment: 'positive', location: 'Moore House' },
-  { id: 'carmen-ortiz', name: 'Carmen Ortiz', color: COLORS.apartment, activity: 'Managing supply store', sentiment: 'positive', location: 'Harvey Oak Supply' },
-  { id: 'tamara-taylor', name: 'Tamara Taylor', color: COLORS.apartment, activity: 'Writing children\'s books', sentiment: 'positive', location: 'Home' },
-  { id: 'adam-smith', name: 'Adam Smith', color: COLORS.apartment, activity: 'Writing book on creativity', sentiment: 'neutral', location: 'Home' },
-  { id: 'giorgio-rossi', name: 'Giorgio Rossi', color: COLORS.apartment, activity: 'Math research', sentiment: 'curious', location: 'Home' },
-  { id: 'ryan-park', name: 'Ryan Park', color: COLORS.apartment, activity: 'Building mobile app', sentiment: 'positive', location: 'Home' },
-  { id: 'yuriko-yamamoto', name: 'Yuriko Yamamoto', color: COLORS.apartment, activity: 'Tax compliance project', sentiment: 'neutral', location: 'Home' },
-  { id: 'arthur-burton', name: 'Arthur Burton', color: COLORS.bar, activity: 'Running the bar', sentiment: 'positive', location: 'The Bar' },
-  { id: 'carlos-gomez', name: 'Carlos Gomez', color: COLORS.apartment, activity: 'Writing poetry', sentiment: 'neutral', location: 'Home' },
+  { id: 'isabella-rodriguez', name: 'Isabella Rodriguez', color: COLORS.cafe, activity: 'Planning Valentine\'s party', sentiment: 'positive', location: 'Hobbs Cafe', avatar: '/avatars/isabella-rodriguez.png' },
+  { id: 'maria-lopez', name: 'Maria Lopez', color: COLORS.college, activity: 'Studying physics & streaming', sentiment: 'curious', location: 'Oak Hill College', avatar: '/avatars/maria-lopez.png' },
+  { id: 'klaus-mueller', name: 'Klaus Mueller', color: COLORS.college, activity: 'Writing research paper', sentiment: 'curious', location: 'Oak Hill College', avatar: '/avatars/klaus-mueller.png' },
+  { id: 'ayesha-khan', name: 'Ayesha Khan', color: COLORS.college, activity: 'Senior thesis research', sentiment: 'curious', location: 'Oak Hill College', avatar: '/avatars/ayesha-khan.png' },
+  { id: 'wolfgang-schulz', name: 'Wolfgang Schulz', color: COLORS.college, activity: 'Training & studying', sentiment: 'positive', location: 'Oak Hill College', avatar: '/avatars/wolfgang-schulz.png' },
+  { id: 'abigail-chen', name: 'Abigail Chen', color: COLORS.coliving, activity: 'Animation project', sentiment: 'positive', location: 'Artist Co-living', avatar: '/avatars/abigail-chen.png' },
+  { id: 'francisco-lopez', name: 'Francisco Lopez', color: COLORS.coliving, activity: 'Web series project', sentiment: 'positive', location: 'Artist Co-living', avatar: '/avatars/francisco-lopez.png' },
+  { id: 'hailey-johnson', name: 'Hailey Johnson', color: COLORS.coliving, activity: 'Writing novel', sentiment: 'curious', location: 'Artist Co-living', avatar: '/avatars/hailey-johnson.png' },
+  { id: 'latoya-williams', name: 'Latoya Williams', color: COLORS.coliving, activity: 'Photography series', sentiment: 'positive', location: 'Artist Co-living', avatar: '/avatars/latoya-williams.png' },
+  { id: 'rajiv-patel', name: 'Rajiv Patel', color: COLORS.coliving, activity: 'Preparing solo show', sentiment: 'positive', location: 'Artist Co-living', avatar: '/avatars/rajiv-patel.png' },
+  { id: 'john-lin', name: 'John Lin', color: COLORS.pharmacy, activity: 'Shop keeping pharmacy', sentiment: 'neutral', location: 'Willow Market', avatar: '/avatars/john-lin.png' },
+  { id: 'tom-moreno', name: 'Tom Moreno', color: COLORS.pharmacy, activity: 'Managing store', sentiment: 'negative', location: 'Willow Market', avatar: '/avatars/tom-moreno.png' },
+  { id: 'eddy-lin', name: 'Eddy Lin', color: COLORS.family, activity: 'Music composition', sentiment: 'curious', location: 'Lin Family House', avatar: '/avatars/eddy-lin.png' },
+  { id: 'mei-lin', name: 'Mei Lin', color: COLORS.family, activity: 'Teaching philosophy', sentiment: 'positive', location: 'Lin Family House', avatar: '/avatars/mei-lin.png' },
+  { id: 'jane-moreno', name: 'Jane Moreno', color: COLORS.family, activity: 'At home', sentiment: 'neutral', location: 'Moreno House', avatar: '/avatars/jane-moreno.png' },
+  { id: 'sam-moore', name: 'Sam Moore', color: COLORS.family, activity: 'Running for mayor', sentiment: 'positive', location: 'Moore House', avatar: '/avatars/sam-moore.png' },
+  { id: 'jennifer-moore', name: 'Jennifer Moore', color: COLORS.family, activity: 'Preparing exhibition', sentiment: 'positive', location: 'Moore House', avatar: '/avatars/jennifer-moore.png' },
+  { id: 'carmen-ortiz', name: 'Carmen Ortiz', color: COLORS.apartment, activity: 'Managing supply store', sentiment: 'positive', location: 'Harvey Oak Supply', avatar: '/avatars/carmen-ortiz.png' },
+  { id: 'tamara-taylor', name: 'Tamara Taylor', color: COLORS.apartment, activity: 'Writing children\'s books', sentiment: 'positive', location: 'Home', avatar: '/avatars/tamara-taylor.png' },
+  { id: 'adam-smith', name: 'Adam Smith', color: COLORS.apartment, activity: 'Writing book on creativity', sentiment: 'neutral', location: 'Home', avatar: '/avatars/adam-smith.png' },
+  { id: 'giorgio-rossi', name: 'Giorgio Rossi', color: COLORS.apartment, activity: 'Math research', sentiment: 'curious', location: 'Home', avatar: '/avatars/giorgio-rossi.png' },
+  { id: 'ryan-park', name: 'Ryan Park', color: COLORS.apartment, activity: 'Building mobile app', sentiment: 'positive', location: 'Home', avatar: '/avatars/ryan-park.png' },
+  { id: 'yuriko-yamamoto', name: 'Yuriko Yamamoto', color: COLORS.apartment, activity: 'Tax compliance project', sentiment: 'neutral', location: 'Home', avatar: '/avatars/yuriko-yamamoto.png' },
+  { id: 'arthur-burton', name: 'Arthur Burton', color: COLORS.bar, activity: 'Running the bar', sentiment: 'positive', location: 'The Bar', avatar: '/avatars/arthur-burton.png' },
+  { id: 'carlos-gomez', name: 'Carlos Gomez', color: COLORS.apartment, activity: 'Writing poetry', sentiment: 'neutral', location: 'Home', avatar: '/avatars/carlos-gomez.png' },
 ];
 
 // Relationships
@@ -154,12 +154,20 @@ export default function GraphPage() {
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white text-lg font-semibold"
-                    style={{ backgroundColor: selectedAgent.color }}
-                  >
-                    {selectedAgent.name.split(' ').map(n => n[0]).join('')}
-                  </div>
+                  {selectedAgent.avatar ? (
+                    <img
+                      src={selectedAgent.avatar}
+                      alt={selectedAgent.name}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
+                    />
+                  ) : (
+                    <div
+                      className="w-14 h-14 rounded-full flex items-center justify-center text-white text-lg font-semibold"
+                      style={{ backgroundColor: selectedAgent.color }}
+                    >
+                      {selectedAgent.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  )}
                   <div>
                     <div className="text-[15px] font-semibold text-[#2D2D2D]">{selectedAgent.name}</div>
                     <div className="text-[12px] text-[#8E8E93]">{selectedAgent.location}</div>

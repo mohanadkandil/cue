@@ -10,6 +10,7 @@ export interface AgentNode {
   sentiment: 'positive' | 'negative' | 'neutral' | 'curious';
   location: string;
   color: string;
+  avatar?: string;
 }
 
 export interface AgentLink {
@@ -98,23 +99,51 @@ export default function D3ForceGraph({ nodes, links, onNodeClick }: Props) {
       .on('drag', dragged)
       .on('end', dragended));
 
-    // Node circles
-    node.append('circle')
-      .attr('r', 20)
-      .attr('fill', (d: any) => d.color)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 2)
-      .style('filter', 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))');
+    // Define clip paths for circular images
+    const defs = g.append('defs');
 
-    // Node initials
-    node.append('text')
-      .text((d: any) => d.name.split(' ').map((n: string) => n[0]).join(''))
-      .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em')
+    simNodes.forEach((d: any) => {
+      defs.append('clipPath')
+        .attr('id', `clip-${d.id}`)
+        .append('circle')
+        .attr('r', 20)
+        .attr('cx', 0)
+        .attr('cy', 0);
+    });
+
+    // Node background circle (for border)
+    node.append('circle')
+      .attr('r', 22)
       .attr('fill', '#fff')
-      .attr('font-size', '10px')
-      .attr('font-weight', '600')
-      .attr('pointer-events', 'none');
+      .style('filter', 'drop-shadow(0 2px 8px rgba(0,0,0,0.15))');
+
+    // Node avatar images
+    node.append('image')
+      .attr('xlink:href', (d: any) => d.avatar || '')
+      .attr('x', -20)
+      .attr('y', -20)
+      .attr('width', 40)
+      .attr('height', 40)
+      .attr('clip-path', (d: any) => `url(#clip-${d.id})`)
+      .attr('preserveAspectRatio', 'xMidYMid slice')
+      .on('error', function(this: SVGImageElement) {
+        // Fallback to colored circle if image fails
+        const parent = (this as SVGImageElement).parentNode as SVGGElement;
+        d3.select(parent).select('image').remove();
+        d3.select(parent).append('circle')
+          .attr('r', 20)
+          .attr('fill', (d: any) => d.color)
+          .attr('stroke', '#fff')
+          .attr('stroke-width', 2);
+        d3.select(parent).append('text')
+          .text((d: any) => d.name.split(' ').map((n: string) => n[0]).join(''))
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .attr('fill', '#fff')
+          .attr('font-size', '10px')
+          .attr('font-weight', '600')
+          .attr('pointer-events', 'none');
+      });
 
     // Node labels (name below)
     node.append('text')
