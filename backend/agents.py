@@ -118,7 +118,7 @@ class Agent:
 
     def get_current_activity(self, hour: int) -> ScheduleBlock:
         """What is this agent doing at this hour?"""
-        return get_current_activity(self.occupation, hour)
+        return get_current_activity(self.occupation, hour, self.id)
 
     def can_socialize(self, hour: int) -> bool:
         """Can this agent chat right now?"""

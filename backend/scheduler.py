@@ -5,6 +5,7 @@ Defines daily routines for agents.
 Given an agent and a time, returns what they should be doing.
 """
 
+import random
 from dataclasses import dataclass
 
 
@@ -28,12 +29,14 @@ class ScheduleBlock:
     can_socialize: bool = True
     can_be_interrupted: bool = True
 
-    def contains_hour(self, hour: int) -> bool:
-        """Check if a given hour falls within this block"""
+    def contains_hour(self, hour: int, offset: int = 0) -> bool:
+        """Check if a given hour falls within this block (with optional offset)"""
+        adjusted_start = (self.start_hour + offset) % 24
+        adjusted_end = (self.end_hour + offset) % 24
         # Handle overnight blocks (e.g., 22:00 - 06:00)
-        if self.start_hour > self.end_hour:
-            return hour >= self.start_hour or hour < self.end_hour
-        return self.start_hour <= hour < self.end_hour
+        if adjusted_start > adjusted_end:
+            return hour >= adjusted_start or hour < adjusted_end
+        return adjusted_start <= hour < adjusted_end
 
 
 # Pre-defined schedule templates based on occupation/lifestyle
@@ -121,6 +124,45 @@ SCHEDULE_TEMPLATES: dict[str, list[ScheduleBlock]] = {
         ScheduleBlock(19, 22, "relaxing", "home", can_socialize=True),
         ScheduleBlock(22, 24, "sleeping", "home", can_socialize=False, can_be_interrupted=False),
     ],
+
+    # Early bird variant
+    "early_bird": [
+        ScheduleBlock(0, 5, "sleeping", "home", can_socialize=False, can_be_interrupted=False),
+        ScheduleBlock(5, 6, "morning workout", "gym", can_socialize=True),
+        ScheduleBlock(6, 7, "morning routine", "home", can_socialize=False),
+        ScheduleBlock(7, 11, "deep work", "office", can_socialize=True),
+        ScheduleBlock(11, 12, "lunch break", "cafe", can_socialize=True),
+        ScheduleBlock(12, 16, "meetings", "office", can_socialize=True),
+        ScheduleBlock(16, 18, "networking", "coworking space", can_socialize=True),
+        ScheduleBlock(18, 21, "relaxing", "home", can_socialize=True),
+        ScheduleBlock(21, 24, "sleeping", "home", can_socialize=False, can_be_interrupted=False),
+    ],
+
+    # Night owl variant
+    "night_owl": [
+        ScheduleBlock(0, 2, "side projects", "home", can_socialize=True),
+        ScheduleBlock(2, 9, "sleeping", "home", can_socialize=False, can_be_interrupted=False),
+        ScheduleBlock(9, 10, "morning routine", "home", can_socialize=False),
+        ScheduleBlock(10, 11, "coffee", "cafe", can_socialize=True),
+        ScheduleBlock(11, 14, "working", "coworking space", can_socialize=True),
+        ScheduleBlock(14, 15, "lunch break", "restaurant", can_socialize=True),
+        ScheduleBlock(15, 19, "working", "coworking space", can_socialize=True),
+        ScheduleBlock(19, 21, "dinner", "restaurant", can_socialize=True),
+        ScheduleBlock(21, 24, "socializing", "bar", can_socialize=True),
+    ],
+
+    # Social butterfly
+    "social": [
+        ScheduleBlock(0, 7, "sleeping", "home", can_socialize=False, can_be_interrupted=False),
+        ScheduleBlock(7, 8, "morning routine", "home", can_socialize=False),
+        ScheduleBlock(8, 10, "coffee meetings", "cafe", can_socialize=True),
+        ScheduleBlock(10, 12, "working", "office", can_socialize=True),
+        ScheduleBlock(12, 14, "lunch networking", "restaurant", can_socialize=True),
+        ScheduleBlock(14, 17, "meetings", "various", can_socialize=True),
+        ScheduleBlock(17, 19, "happy hour", "bar", can_socialize=True),
+        ScheduleBlock(19, 21, "dinner event", "venue", can_socialize=True),
+        ScheduleBlock(21, 24, "relaxing", "home", can_socialize=True),
+    ],
 }
 
 
@@ -143,6 +185,21 @@ OCCUPATION_TO_TEMPLATE: dict[str, str] = {
     "Board Advisor": "retired",
     "University Professor": "software_engineer",
     "Research Scientist": "software_engineer",
+    # Luma / Events personas
+    "Event Organizer": "executive",
+    "Community Manager": "freelancer",
+    "Founder": "executive",
+    "VC Partner": "executive",
+    "Investor": "executive",
+    "Developer Relations": "software_engineer",
+    "Head of Community": "executive",
+    "Growth Lead": "executive",
+    "Product Manager": "software_engineer",
+    "Startup Founder": "executive",
+    "Angel Investor": "executive",
+    "Conference Organizer": "executive",
+    "Tech Evangelist": "freelancer",
+    "Community Lead": "freelancer",
 }
 
 
@@ -152,21 +209,67 @@ def get_schedule_for_occupation(occupation: str) -> list[ScheduleBlock]:
     return SCHEDULE_TEMPLATES[template_name]
 
 
-def get_current_activity(occupation: str, hour: int) -> ScheduleBlock:
+# Cache agent schedule variants and offsets for consistency
+_agent_variants: dict[str, str] = {}
+_agent_offsets: dict[str, int] = {}
+
+def get_agent_variant(agent_id: str, base_template: str) -> str:
+    """Get a consistent schedule variant for an agent"""
+    if agent_id not in _agent_variants:
+        random.seed(hash(agent_id + "variant"))
+        # 40% use base template, 60% get a variant
+        roll = random.random()
+        if roll < 0.4:
+            _agent_variants[agent_id] = base_template
+        elif roll < 0.55:
+            _agent_variants[agent_id] = "early_bird"
+        elif roll < 0.70:
+            _agent_variants[agent_id] = "night_owl"
+        elif roll < 0.85:
+            _agent_variants[agent_id] = "social"
+        else:
+            _agent_variants[agent_id] = base_template
+        random.seed()
+    return _agent_variants[agent_id]
+
+def get_agent_offset(agent_id: str) -> int:
+    """Get a consistent random offset for an agent (-1 to 2 hours)"""
+    if agent_id not in _agent_offsets:
+        random.seed(hash(agent_id + "offset"))
+        _agent_offsets[agent_id] = random.randint(-1, 2)
+        random.seed()
+    return _agent_offsets[agent_id]
+
+
+def get_current_activity(occupation: str, hour: int, agent_id: str = None) -> ScheduleBlock:
     """
     Get what an agent should be doing at a given hour.
 
     Args:
         occupation: The agent's occupation
         hour: Current hour (0-23)
+        agent_id: Optional agent ID for schedule variance
 
     Returns:
         The ScheduleBlock for this time
     """
-    schedule = get_schedule_for_occupation(occupation)
+    # Get base template for occupation
+    base_template = OCCUPATION_TO_TEMPLATE.get(occupation, "default")
+
+    # Maybe use a variant based on agent personality
+    if agent_id:
+        template_name = get_agent_variant(agent_id, base_template)
+    else:
+        template_name = base_template
+
+    schedule = SCHEDULE_TEMPLATES.get(template_name, SCHEDULE_TEMPLATES["default"])
+
+    # Apply per-agent time offset for variety
+    offset = get_agent_offset(agent_id) if agent_id else 0
+    adjusted_hour = (hour - offset) % 24
 
     for block in schedule:
-        if block.contains_hour(hour):
+        if block.contains_hour(adjusted_hour):
             return block
 
     # Fallback (should never happen if schedules cover 24h)

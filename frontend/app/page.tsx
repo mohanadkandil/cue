@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Zap, Lightbulb, Users, Play } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Zap, Lightbulb, Users, Play } from "lucide-react";
 
 const SUGGESTIONS = [
-  'Add AI copilot',
-  'Remove free tier',
-  'Redesign onboarding',
-  'Launch mobile app',
+  "Add AI copilot",
+  "Remove free tier",
+  "Redesign onboarding",
+  "Launch mobile app",
 ];
 
 export default function InputPage() {
   const router = useRouter();
-  const [featureText, setFeatureText] = useState('');
+  const [featureText, setFeatureText] = useState("");
   const [isRunning, setIsRunning] = useState(false);
 
   const handleRun = async () => {
@@ -21,10 +21,10 @@ export default function InputPage() {
 
     setIsRunning(true);
     // Store the feature in sessionStorage for the output page
-    sessionStorage.setItem('agentsim_feature', featureText);
+    sessionStorage.setItem("agentsim_feature", featureText);
 
     // Navigate to the output/results page
-    router.push('/output');
+    router.push("/output");
   };
 
   const handleSuggestion = (suggestion: string) => {
@@ -50,13 +50,6 @@ export default function InputPage() {
           <h1 className="font-display text-[44px] font-medium text-text text-center leading-[1.15] tracking-[-1px]">
             What feature will you ship next?
           </h1>
-
-          {/* Subtitle */}
-          <p className="text-base text-text-secondary text-center leading-relaxed max-w-[520px]">
-            Describe your feature and watch thousands of AI agents react in real-time.
-            <br />
-            See what your users will think before you write a single line of code.
-          </p>
         </div>
 
         {/* Input Card */}
@@ -89,7 +82,7 @@ export default function InputPage() {
               className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Play className="w-4 h-4" />
-              <span>{isRunning ? 'Starting...' : 'Run Simulation'}</span>
+              <span>{isRunning ? "Starting..." : "Run Simulation"}</span>
             </button>
           </div>
         </div>
