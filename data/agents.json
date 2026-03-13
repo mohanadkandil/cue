@@ -6,7 +6,7 @@
       "age": 32,
       "occupation": "Developer Advocate",
       "location": "San Francisco",
-      "avatar": "👩‍💻",
+      "avatar": "/avatars/isabella-rodriguez.png",
       "bio": "Dev advocate at a major AI startup. Hosts weekly meetups and workshops. Power user of event platforms.",
       "personality": {
         "openness": 88,
@@ -15,14 +15,32 @@
         "neuroticism": 35,
         "conscientiousness": 78
       },
-      "biases": ["community first", "loves seamless UX", "values developer experience"],
-      "interests": ["AI/ML", "public speaking", "community building", "hackathons"],
+      "biases": [
+        "community first",
+        "loves seamless UX",
+        "values developer experience"
+      ],
+      "interests": [
+        "AI/ML",
+        "public speaking",
+        "community building",
+        "hackathons"
+      ],
       "social_style": "connector",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-02", "agent-05"],
-        "acquaintances": ["agent-08", "agent-12", "agent-15"],
-        "colleagues": ["agent-03"]
+        "close_friends": [
+          "agent-02",
+          "agent-05"
+        ],
+        "acquaintances": [
+          "agent-08",
+          "agent-12",
+          "agent-15"
+        ],
+        "colleagues": [
+          "agent-03"
+        ]
       },
       "currently": "Planning a 500-person AI conference next month"
     },
@@ -32,7 +50,7 @@
       "age": 28,
       "occupation": "Community Manager",
       "location": "New York",
-      "avatar": "🧑‍🎤",
+      "avatar": "/avatars/maria-lopez.png",
       "bio": "Runs community for a Web3 startup. Manages 50+ events per year. Expert at driving engagement.",
       "personality": {
         "openness": 92,
@@ -41,14 +59,32 @@
         "neuroticism": 42,
         "conscientiousness": 72
       },
-      "biases": ["engagement metrics matter", "hates clunky tools", "network effects"],
-      "interests": ["Web3", "community strategy", "social media", "NFTs"],
+      "biases": [
+        "engagement metrics matter",
+        "hates clunky tools",
+        "network effects"
+      ],
+      "interests": [
+        "Web3",
+        "community strategy",
+        "social media",
+        "NFTs"
+      ],
       "social_style": "influencer",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-01", "agent-06"],
-        "acquaintances": ["agent-09", "agent-14", "agent-20"],
-        "colleagues": ["agent-07"]
+        "close_friends": [
+          "agent-01",
+          "agent-06"
+        ],
+        "acquaintances": [
+          "agent-09",
+          "agent-14",
+          "agent-20"
+        ],
+        "colleagues": [
+          "agent-07"
+        ]
       },
       "currently": "Testing different platforms for their upcoming token launch event"
     },
@@ -58,7 +94,7 @@
       "age": 35,
       "occupation": "Tech Meetup Organizer",
       "location": "San Francisco",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/klaus-mueller.png",
       "bio": "Runs the largest React meetup in SF with 3000+ members. Full-time engineer, part-time community builder.",
       "personality": {
         "openness": 80,
@@ -67,14 +103,31 @@
         "neuroticism": 38,
         "conscientiousness": 85
       },
-      "biases": ["simplicity wins", "free tools preferred", "speaker experience matters"],
-      "interests": ["React", "JavaScript", "open source", "public speaking"],
+      "biases": [
+        "simplicity wins",
+        "free tools preferred",
+        "speaker experience matters"
+      ],
+      "interests": [
+        "React",
+        "JavaScript",
+        "open source",
+        "public speaking"
+      ],
       "social_style": "organizer",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-05"],
-        "acquaintances": ["agent-01", "agent-08", "agent-11"],
-        "colleagues": ["agent-01"]
+        "close_friends": [
+          "agent-05"
+        ],
+        "acquaintances": [
+          "agent-01",
+          "agent-08",
+          "agent-11"
+        ],
+        "colleagues": [
+          "agent-01"
+        ]
       },
       "currently": "Frustrated with current event platform's RSVP tracking"
     },
@@ -84,7 +137,7 @@
       "age": 42,
       "occupation": "Conference Director",
       "location": "Austin",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/ayesha-khan.png",
       "bio": "Runs a major tech conference with 5000+ attendees. 15 years in events. High standards for tools.",
       "personality": {
         "openness": 68,
@@ -93,14 +146,31 @@
         "neuroticism": 45,
         "conscientiousness": 95
       },
-      "biases": ["reliability is everything", "enterprise features needed", "ROI focused"],
-      "interests": ["event production", "sponsorship sales", "logistics", "travel"],
+      "biases": [
+        "reliability is everything",
+        "enterprise features needed",
+        "ROI focused"
+      ],
+      "interests": [
+        "event production",
+        "sponsorship sales",
+        "logistics",
+        "travel"
+      ],
       "social_style": "executive",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-10"],
-        "acquaintances": ["agent-12", "agent-17", "agent-25"],
-        "colleagues": ["agent-18"]
+        "close_friends": [
+          "agent-10"
+        ],
+        "acquaintances": [
+          "agent-12",
+          "agent-17",
+          "agent-25"
+        ],
+        "colleagues": [
+          "agent-18"
+        ]
       },
       "currently": "Evaluating event platforms for next year's conference"
     },
@@ -110,7 +180,7 @@
       "age": 29,
       "occupation": "Startup Founder",
       "location": "San Francisco",
-      "avatar": "🧑‍🚀",
+      "avatar": "/avatars/wolfgang-schulz.png",
       "bio": "Second-time founder building a dev tools company. Hosts investor dinners and launch events regularly.",
       "personality": {
         "openness": 95,
@@ -119,14 +189,32 @@
         "neuroticism": 55,
         "conscientiousness": 70
       },
-      "biases": ["move fast", "aesthetic matters", "network is everything"],
-      "interests": ["startups", "fundraising", "product launches", "networking"],
+      "biases": [
+        "move fast",
+        "aesthetic matters",
+        "network is everything"
+      ],
+      "interests": [
+        "startups",
+        "fundraising",
+        "product launches",
+        "networking"
+      ],
       "social_style": "evangelist",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-01", "agent-03"],
-        "acquaintances": ["agent-06", "agent-14", "agent-22"],
-        "colleagues": ["agent-11"]
+        "close_friends": [
+          "agent-01",
+          "agent-03"
+        ],
+        "acquaintances": [
+          "agent-06",
+          "agent-14",
+          "agent-22"
+        ],
+        "colleagues": [
+          "agent-11"
+        ]
       },
       "currently": "Planning a Product Hunt launch party"
     },
@@ -136,7 +224,7 @@
       "age": 26,
       "occupation": "VC Associate",
       "location": "New York",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/abigail-chen.png",
       "bio": "Works at a top-tier VC. Attends 10+ events per week. Always scouting for founders.",
       "personality": {
         "openness": 82,
@@ -145,14 +233,31 @@
         "neuroticism": 40,
         "conscientiousness": 88
       },
-      "biases": ["exclusive access matters", "FOMO driven", "relationship building"],
-      "interests": ["venture capital", "startups", "founder events", "deal sourcing"],
+      "biases": [
+        "exclusive access matters",
+        "FOMO driven",
+        "relationship building"
+      ],
+      "interests": [
+        "venture capital",
+        "startups",
+        "founder events",
+        "deal sourcing"
+      ],
       "social_style": "networker",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-02"],
-        "acquaintances": ["agent-05", "agent-10", "agent-14"],
-        "colleagues": ["agent-22"]
+        "close_friends": [
+          "agent-02"
+        ],
+        "acquaintances": [
+          "agent-05",
+          "agent-10",
+          "agent-14"
+        ],
+        "colleagues": [
+          "agent-22"
+        ]
       },
       "currently": "Looking for the best founder dinner platforms"
     },
@@ -162,7 +267,7 @@
       "age": 31,
       "occupation": "Growth Marketer",
       "location": "Los Angeles",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/francisco-lopez.png",
       "bio": "Head of growth at a Series B startup. Runs webinars and virtual events weekly.",
       "personality": {
         "openness": 78,
@@ -171,14 +276,29 @@
         "neuroticism": 48,
         "conscientiousness": 80
       },
-      "biases": ["conversion focused", "data driven", "automation lover"],
-      "interests": ["growth hacking", "webinars", "lead generation", "analytics"],
+      "biases": [
+        "conversion focused",
+        "data driven",
+        "automation lover"
+      ],
+      "interests": [
+        "growth hacking",
+        "webinars",
+        "lead generation",
+        "analytics"
+      ],
       "social_style": "strategist",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-02", "agent-09", "agent-17"],
-        "colleagues": ["agent-02"]
+        "acquaintances": [
+          "agent-02",
+          "agent-09",
+          "agent-17"
+        ],
+        "colleagues": [
+          "agent-02"
+        ]
       },
       "currently": "Comparing webinar platforms for lead gen events"
     },
@@ -188,7 +308,7 @@
       "age": 38,
       "occupation": "Tech Journalist",
       "location": "San Francisco",
-      "avatar": "👩‍💻",
+      "avatar": "/avatars/hailey-johnson.png",
       "bio": "Senior reporter at a major tech publication. Covers startups and venture capital. Attends all major events.",
       "personality": {
         "openness": 85,
@@ -197,14 +317,30 @@
         "neuroticism": 50,
         "conscientiousness": 90
       },
-      "biases": ["access is everything", "skeptical of hype", "values authenticity"],
-      "interests": ["tech journalism", "investigative reporting", "podcasting", "startups"],
+      "biases": [
+        "access is everything",
+        "skeptical of hype",
+        "values authenticity"
+      ],
+      "interests": [
+        "tech journalism",
+        "investigative reporting",
+        "podcasting",
+        "startups"
+      ],
       "social_style": "investigator",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-01", "agent-03", "agent-05", "agent-10"],
-        "colleagues": ["agent-19"]
+        "acquaintances": [
+          "agent-01",
+          "agent-03",
+          "agent-05",
+          "agent-10"
+        ],
+        "colleagues": [
+          "agent-19"
+        ]
       },
       "currently": "Writing about the evolution of tech events post-pandemic"
     },
@@ -214,7 +350,7 @@
       "age": 33,
       "occupation": "Coworking Space Manager",
       "location": "Miami",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/latoya-williams.png",
       "bio": "Manages a popular coworking space. Hosts 20+ community events per month. Partnership focused.",
       "personality": {
         "openness": 75,
@@ -223,13 +359,28 @@
         "neuroticism": 32,
         "conscientiousness": 78
       },
-      "biases": ["community value", "partnerships matter", "local connections"],
-      "interests": ["coworking", "local startups", "community events", "real estate"],
+      "biases": [
+        "community value",
+        "partnerships matter",
+        "local connections"
+      ],
+      "interests": [
+        "coworking",
+        "local startups",
+        "community events",
+        "real estate"
+      ],
       "social_style": "host",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-12"],
-        "acquaintances": ["agent-02", "agent-07", "agent-15"],
+        "close_friends": [
+          "agent-12"
+        ],
+        "acquaintances": [
+          "agent-02",
+          "agent-07",
+          "agent-15"
+        ],
         "colleagues": []
       },
       "currently": "Looking for better event management for the space"
@@ -240,7 +391,7 @@
       "age": 45,
       "occupation": "Executive Coach",
       "location": "New York",
-      "avatar": "👩‍🏫",
+      "avatar": "/avatars/rajiv-patel.png",
       "bio": "Former VP at Google. Now coaches tech executives. Hosts exclusive dinner series.",
       "personality": {
         "openness": 70,
@@ -249,13 +400,28 @@
         "neuroticism": 25,
         "conscientiousness": 92
       },
-      "biases": ["quality over quantity", "exclusivity matters", "trust is earned"],
-      "interests": ["leadership", "executive coaching", "curated dinners", "mindfulness"],
+      "biases": [
+        "quality over quantity",
+        "exclusivity matters",
+        "trust is earned"
+      ],
+      "interests": [
+        "leadership",
+        "executive coaching",
+        "curated dinners",
+        "mindfulness"
+      ],
       "social_style": "curator",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-04"],
-        "acquaintances": ["agent-06", "agent-22", "agent-25"],
+        "close_friends": [
+          "agent-04"
+        ],
+        "acquaintances": [
+          "agent-06",
+          "agent-22",
+          "agent-25"
+        ],
         "colleagues": []
       },
       "currently": "Planning an invite-only founder retreat"
@@ -266,7 +432,7 @@
       "age": 27,
       "occupation": "Product Designer",
       "location": "San Francisco",
-      "avatar": "👨‍🎨",
+      "avatar": "/avatars/john-lin.png",
       "bio": "Designer at a hot startup. Hosts design critique meetups. Strong opinions on UX.",
       "personality": {
         "openness": 92,
@@ -275,14 +441,31 @@
         "neuroticism": 45,
         "conscientiousness": 75
       },
-      "biases": ["design details matter", "user experience first", "aesthetic snob"],
-      "interests": ["product design", "Figma", "design systems", "photography"],
+      "biases": [
+        "design details matter",
+        "user experience first",
+        "aesthetic snob"
+      ],
+      "interests": [
+        "product design",
+        "Figma",
+        "design systems",
+        "photography"
+      ],
       "social_style": "creative",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-16"],
-        "acquaintances": ["agent-03", "agent-05", "agent-24"],
-        "colleagues": ["agent-05"]
+        "close_friends": [
+          "agent-16"
+        ],
+        "acquaintances": [
+          "agent-03",
+          "agent-05",
+          "agent-24"
+        ],
+        "colleagues": [
+          "agent-05"
+        ]
       },
       "currently": "Annoyed by poorly designed event registration flows"
     },
@@ -292,7 +475,7 @@
       "age": 34,
       "occupation": "Founder Events Host",
       "location": "San Francisco",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/tom-moreno.png",
       "bio": "Runs a popular founder dinner series. 200+ successful events. Known for amazing curation.",
       "personality": {
         "openness": 85,
@@ -301,13 +484,29 @@
         "neuroticism": 38,
         "conscientiousness": 85
       },
-      "biases": ["curation is everything", "intimate > large", "meaningful connections"],
-      "interests": ["founder dinners", "networking", "wine", "building community"],
+      "biases": [
+        "curation is everything",
+        "intimate > large",
+        "meaningful connections"
+      ],
+      "interests": [
+        "founder dinners",
+        "networking",
+        "wine",
+        "building community"
+      ],
       "social_style": "connector",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-09"],
-        "acquaintances": ["agent-01", "agent-04", "agent-06", "agent-14"],
+        "close_friends": [
+          "agent-09"
+        ],
+        "acquaintances": [
+          "agent-01",
+          "agent-04",
+          "agent-06",
+          "agent-14"
+        ],
         "colleagues": []
       },
       "currently": "Testing new event platforms for better guest management"
@@ -318,7 +517,7 @@
       "age": 52,
       "occupation": "Corporate Events Director",
       "location": "Chicago",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/eddy-lin.png",
       "bio": "Runs events for a Fortune 500 company. 500+ events per year. Enterprise requirements.",
       "personality": {
         "openness": 50,
@@ -327,14 +526,29 @@
         "neuroticism": 35,
         "conscientiousness": 95
       },
-      "biases": ["compliance first", "enterprise features required", "security matters"],
-      "interests": ["corporate events", "vendor management", "golf", "wine"],
+      "biases": [
+        "compliance first",
+        "enterprise features required",
+        "security matters"
+      ],
+      "interests": [
+        "corporate events",
+        "vendor management",
+        "golf",
+        "wine"
+      ],
       "social_style": "executive",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-04", "agent-17", "agent-25"],
-        "colleagues": ["agent-18"]
+        "acquaintances": [
+          "agent-04",
+          "agent-17",
+          "agent-25"
+        ],
+        "colleagues": [
+          "agent-18"
+        ]
       },
       "currently": "Evaluating platforms that integrate with their SSO"
     },
@@ -344,7 +558,7 @@
       "age": 30,
       "occupation": "Angel Investor",
       "location": "San Francisco",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/mei-lin.png",
       "bio": "Former founder, now active angel. Hosts monthly founder office hours. Well connected in tech.",
       "personality": {
         "openness": 88,
@@ -353,13 +567,27 @@
         "neuroticism": 42,
         "conscientiousness": 80
       },
-      "biases": ["founder friendly", "values authenticity", "quality dealflow"],
-      "interests": ["angel investing", "mentoring", "founder events", "travel"],
+      "biases": [
+        "founder friendly",
+        "values authenticity",
+        "quality dealflow"
+      ],
+      "interests": [
+        "angel investing",
+        "mentoring",
+        "founder events",
+        "travel"
+      ],
       "social_style": "mentor",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-02", "agent-05", "agent-06", "agent-12"],
+        "acquaintances": [
+          "agent-02",
+          "agent-05",
+          "agent-06",
+          "agent-12"
+        ],
         "colleagues": []
       },
       "currently": "Looking for a better way to manage her event RSVPs"
@@ -370,7 +598,7 @@
       "age": 25,
       "occupation": "Community Lead",
       "location": "Austin",
-      "avatar": "🧑‍🎤",
+      "avatar": "/avatars/jane-moreno.png",
       "bio": "Runs community for a popular dev tools company. Gen Z energy. TikTok native.",
       "personality": {
         "openness": 90,
@@ -379,13 +607,28 @@
         "neuroticism": 50,
         "conscientiousness": 65
       },
-      "biases": ["mobile first", "hates friction", "wants cool factor"],
-      "interests": ["community", "memes", "hackathons", "gaming"],
+      "biases": [
+        "mobile first",
+        "hates friction",
+        "wants cool factor"
+      ],
+      "interests": [
+        "community",
+        "memes",
+        "hackathons",
+        "gaming"
+      ],
       "social_style": "hype-builder",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-20"],
-        "acquaintances": ["agent-01", "agent-09", "agent-24"],
+        "close_friends": [
+          "agent-20"
+        ],
+        "acquaintances": [
+          "agent-01",
+          "agent-09",
+          "agent-24"
+        ],
         "colleagues": []
       },
       "currently": "Planning a viral hackathon campaign"
@@ -396,7 +639,7 @@
       "age": 29,
       "occupation": "UX Researcher",
       "location": "Seattle",
-      "avatar": "👩‍🔬",
+      "avatar": "/avatars/sam-moore.png",
       "bio": "UX researcher at a big tech company. Studies how people interact with event platforms.",
       "personality": {
         "openness": 85,
@@ -405,13 +648,27 @@
         "neuroticism": 40,
         "conscientiousness": 88
       },
-      "biases": ["user research driven", "accessibility matters", "pain points focused"],
-      "interests": ["UX research", "accessibility", "user interviews", "hiking"],
+      "biases": [
+        "user research driven",
+        "accessibility matters",
+        "pain points focused"
+      ],
+      "interests": [
+        "UX research",
+        "accessibility",
+        "user interviews",
+        "hiking"
+      ],
       "social_style": "analyst",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-11"],
-        "acquaintances": ["agent-03", "agent-19"],
+        "close_friends": [
+          "agent-11"
+        ],
+        "acquaintances": [
+          "agent-03",
+          "agent-19"
+        ],
         "colleagues": []
       },
       "currently": "Conducting research on event discovery experiences"
@@ -422,7 +679,7 @@
       "age": 48,
       "occupation": "Event Sponsor",
       "location": "New York",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/jennifer-moore.png",
       "bio": "VP Marketing at enterprise software company. Sponsors 100+ events yearly. ROI obsessed.",
       "personality": {
         "openness": 58,
@@ -431,14 +688,29 @@
         "neuroticism": 40,
         "conscientiousness": 90
       },
-      "biases": ["lead quality matters", "brand visibility", "measurable results"],
-      "interests": ["B2B marketing", "brand sponsorship", "golf", "networking"],
+      "biases": [
+        "lead quality matters",
+        "brand visibility",
+        "measurable results"
+      ],
+      "interests": [
+        "B2B marketing",
+        "brand sponsorship",
+        "golf",
+        "networking"
+      ],
       "social_style": "dealmaker",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-04", "agent-07", "agent-13"],
-        "colleagues": ["agent-25"]
+        "acquaintances": [
+          "agent-04",
+          "agent-07",
+          "agent-13"
+        ],
+        "colleagues": [
+          "agent-25"
+        ]
       },
       "currently": "Negotiating sponsorship packages for Q3 events"
     },
@@ -448,7 +720,7 @@
       "age": 36,
       "occupation": "Event Operations Manager",
       "location": "Austin",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/carmen-ortiz.png",
       "bio": "Behind-the-scenes hero. Manages logistics for major tech events. Detail oriented.",
       "personality": {
         "openness": 65,
@@ -457,14 +729,29 @@
         "neuroticism": 48,
         "conscientiousness": 95
       },
-      "biases": ["checklists are life", "hates last-minute changes", "process oriented"],
-      "interests": ["event logistics", "project management", "true crime podcasts", "yoga"],
+      "biases": [
+        "checklists are life",
+        "hates last-minute changes",
+        "process oriented"
+      ],
+      "interests": [
+        "event logistics",
+        "project management",
+        "true crime podcasts",
+        "yoga"
+      ],
       "social_style": "operator",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-04", "agent-09"],
-        "colleagues": ["agent-04", "agent-13"]
+        "acquaintances": [
+          "agent-04",
+          "agent-09"
+        ],
+        "colleagues": [
+          "agent-04",
+          "agent-13"
+        ]
       },
       "currently": "Stressed about badge printing for upcoming conference"
     },
@@ -474,7 +761,7 @@
       "age": 32,
       "occupation": "Tech Blogger",
       "location": "San Francisco",
-      "avatar": "👨‍💻",
+      "avatar": "/avatars/tamara-taylor.png",
       "bio": "Runs a popular tech blog. Reviews tools and platforms. 100k newsletter subscribers.",
       "personality": {
         "openness": 88,
@@ -483,14 +770,28 @@
         "neuroticism": 45,
         "conscientiousness": 82
       },
-      "biases": ["authenticity over sponsorship", "user experience critic", "detail oriented"],
-      "interests": ["tech reviews", "writing", "product launches", "photography"],
+      "biases": [
+        "authenticity over sponsorship",
+        "user experience critic",
+        "detail oriented"
+      ],
+      "interests": [
+        "tech reviews",
+        "writing",
+        "product launches",
+        "photography"
+      ],
       "social_style": "broadcaster",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-08", "agent-16"],
-        "colleagues": ["agent-08"]
+        "acquaintances": [
+          "agent-08",
+          "agent-16"
+        ],
+        "colleagues": [
+          "agent-08"
+        ]
       },
       "currently": "Writing a comparison of event management platforms"
     },
@@ -500,7 +801,7 @@
       "age": 24,
       "occupation": "Campus Ambassador",
       "location": "Boston",
-      "avatar": "👩‍🎓",
+      "avatar": "/avatars/adam-smith.png",
       "bio": "MIT student, runs tech events on campus. Ambassador for several startups. High energy.",
       "personality": {
         "openness": 92,
@@ -509,13 +810,27 @@
         "neuroticism": 52,
         "conscientiousness": 70
       },
-      "biases": ["student friendly pricing", "cool factor matters", "peer influence"],
-      "interests": ["campus events", "hackathons", "tech startups", "social impact"],
+      "biases": [
+        "student friendly pricing",
+        "cool factor matters",
+        "peer influence"
+      ],
+      "interests": [
+        "campus events",
+        "hackathons",
+        "tech startups",
+        "social impact"
+      ],
       "social_style": "enthusiast",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-15"],
-        "acquaintances": ["agent-02", "agent-24"],
+        "close_friends": [
+          "agent-15"
+        ],
+        "acquaintances": [
+          "agent-02",
+          "agent-24"
+        ],
         "colleagues": []
       },
       "currently": "Organizing a 500-person campus hackathon"
@@ -526,7 +841,7 @@
       "age": 40,
       "occupation": "Accelerator Director",
       "location": "San Francisco",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/giorgio-rossi.png",
       "bio": "Runs a top startup accelerator. Manages demo days and investor events. Well connected.",
       "personality": {
         "openness": 75,
@@ -535,14 +850,30 @@
         "neuroticism": 35,
         "conscientiousness": 88
       },
-      "biases": ["professionalism matters", "investor experience first", "demo day perfection"],
-      "interests": ["startups", "venture capital", "demo days", "mentoring"],
+      "biases": [
+        "professionalism matters",
+        "investor experience first",
+        "demo day perfection"
+      ],
+      "interests": [
+        "startups",
+        "venture capital",
+        "demo days",
+        "mentoring"
+      ],
       "social_style": "facilitator",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-05", "agent-06", "agent-10", "agent-14"],
-        "colleagues": ["agent-22"]
+        "acquaintances": [
+          "agent-05",
+          "agent-06",
+          "agent-10",
+          "agent-14"
+        ],
+        "colleagues": [
+          "agent-22"
+        ]
       },
       "currently": "Preparing for the biggest demo day of the year"
     },
@@ -552,7 +883,7 @@
       "age": 35,
       "occupation": "Venture Partner",
       "location": "San Francisco",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/ryan-park.png",
       "bio": "Partner at a seed fund. Hosts exclusive LP dinners. Curates portfolio founder events.",
       "personality": {
         "openness": 78,
@@ -561,14 +892,30 @@
         "neuroticism": 38,
         "conscientiousness": 90
       },
-      "biases": ["exclusivity is value", "brand matters", "relationship focused"],
-      "interests": ["venture capital", "founder events", "wine", "art"],
+      "biases": [
+        "exclusivity is value",
+        "brand matters",
+        "relationship focused"
+      ],
+      "interests": [
+        "venture capital",
+        "founder events",
+        "wine",
+        "art"
+      ],
       "social_style": "curator",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-05", "agent-06", "agent-10"],
-        "colleagues": ["agent-06", "agent-21"]
+        "acquaintances": [
+          "agent-05",
+          "agent-06",
+          "agent-10"
+        ],
+        "colleagues": [
+          "agent-06",
+          "agent-21"
+        ]
       },
       "currently": "Planning an LP annual meeting"
     },
@@ -578,7 +925,7 @@
       "age": 28,
       "occupation": "Developer Relations",
       "location": "Seattle",
-      "avatar": "👨‍💻",
+      "avatar": "/avatars/yuriko-yamamoto.png",
       "bio": "DevRel at a cloud platform. Runs workshops and hackathons globally. Community native.",
       "personality": {
         "openness": 90,
@@ -587,13 +934,28 @@
         "neuroticism": 42,
         "conscientiousness": 75
       },
-      "biases": ["developer experience", "community feedback", "documentation matters"],
-      "interests": ["developer tools", "hackathons", "workshops", "gaming"],
+      "biases": [
+        "developer experience",
+        "community feedback",
+        "documentation matters"
+      ],
+      "interests": [
+        "developer tools",
+        "hackathons",
+        "workshops",
+        "gaming"
+      ],
       "social_style": "educator",
       "relationships": {
         "relatives": [],
-        "close_friends": ["agent-01"],
-        "acquaintances": ["agent-03", "agent-15", "agent-20"],
+        "close_friends": [
+          "agent-01"
+        ],
+        "acquaintances": [
+          "agent-03",
+          "agent-15",
+          "agent-20"
+        ],
         "colleagues": []
       },
       "currently": "Planning a global hackathon series"
@@ -604,7 +966,7 @@
       "age": 26,
       "occupation": "Social Media Manager",
       "location": "Los Angeles",
-      "avatar": "👩‍🎤",
+      "avatar": "/avatars/arthur-burton.png",
       "bio": "Manages social for tech events. Expert at creating FOMO. Trend-savvy.",
       "personality": {
         "openness": 88,
@@ -613,13 +975,26 @@
         "neuroticism": 50,
         "conscientiousness": 68
       },
-      "biases": ["viral potential", "aesthetic everything", "engagement metrics"],
-      "interests": ["social media", "content creation", "trends", "events"],
+      "biases": [
+        "viral potential",
+        "aesthetic everything",
+        "engagement metrics"
+      ],
+      "interests": [
+        "social media",
+        "content creation",
+        "trends",
+        "events"
+      ],
       "social_style": "trendsetter",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-11", "agent-15", "agent-20"],
+        "acquaintances": [
+          "agent-11",
+          "agent-15",
+          "agent-20"
+        ],
         "colleagues": []
       },
       "currently": "Creating a TikTok strategy for an upcoming conference"
@@ -630,7 +1005,7 @@
       "age": 50,
       "occupation": "CMO",
       "location": "New York",
-      "avatar": "👨‍💼",
+      "avatar": "/avatars/carlos-gomez.png",
       "bio": "CMO at enterprise SaaS. Controls large event marketing budget. Strategic thinker.",
       "personality": {
         "openness": 62,
@@ -639,14 +1014,29 @@
         "neuroticism": 35,
         "conscientiousness": 92
       },
-      "biases": ["ROI required", "brand consistency", "executive experience"],
-      "interests": ["marketing strategy", "brand building", "golf", "leadership"],
+      "biases": [
+        "ROI required",
+        "brand consistency",
+        "executive experience"
+      ],
+      "interests": [
+        "marketing strategy",
+        "brand building",
+        "golf",
+        "leadership"
+      ],
       "social_style": "executive",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-04", "agent-10", "agent-13"],
-        "colleagues": ["agent-17"]
+        "acquaintances": [
+          "agent-04",
+          "agent-10",
+          "agent-13"
+        ],
+        "colleagues": [
+          "agent-17"
+        ]
       },
       "currently": "Reviewing annual event marketing strategy"
     },
@@ -656,7 +1046,7 @@
       "age": 31,
       "occupation": "Partnerships Manager",
       "location": "Miami",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/isabella-rodriguez.png",
       "bio": "Manages partnerships at an event tech company. Knows the industry inside out.",
       "personality": {
         "openness": 80,
@@ -665,13 +1055,26 @@
         "neuroticism": 40,
         "conscientiousness": 78
       },
-      "biases": ["partnership value", "win-win deals", "relationship first"],
-      "interests": ["partnerships", "business development", "travel", "networking"],
+      "biases": [
+        "partnership value",
+        "win-win deals",
+        "relationship first"
+      ],
+      "interests": [
+        "partnerships",
+        "business development",
+        "travel",
+        "networking"
+      ],
       "social_style": "dealmaker",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-09", "agent-12", "agent-21"],
+        "acquaintances": [
+          "agent-09",
+          "agent-12",
+          "agent-21"
+        ],
         "colleagues": []
       },
       "currently": "Negotiating a major integration partnership"
@@ -682,7 +1085,7 @@
       "age": 36,
       "occupation": "Event Tech Founder",
       "location": "San Francisco",
-      "avatar": "👨‍💻",
+      "avatar": "/avatars/maria-lopez.png",
       "bio": "Founded an event tech startup. Competitive with other platforms. Industry veteran.",
       "personality": {
         "openness": 85,
@@ -691,13 +1094,26 @@
         "neuroticism": 55,
         "conscientiousness": 82
       },
-      "biases": ["competitive analysis", "feature parity", "market positioning"],
-      "interests": ["event tech", "startups", "product strategy", "competition"],
+      "biases": [
+        "competitive analysis",
+        "feature parity",
+        "market positioning"
+      ],
+      "interests": [
+        "event tech",
+        "startups",
+        "product strategy",
+        "competition"
+      ],
       "social_style": "competitor",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-05", "agent-19", "agent-26"],
+        "acquaintances": [
+          "agent-05",
+          "agent-19",
+          "agent-26"
+        ],
         "colleagues": []
       },
       "currently": "Watching competitor launches closely"
@@ -708,7 +1124,7 @@
       "age": 29,
       "occupation": "Event Planner",
       "location": "Denver",
-      "avatar": "👩‍💼",
+      "avatar": "/avatars/klaus-mueller.png",
       "bio": "Independent event planner. Works with tech startups. Values beautiful, seamless events.",
       "personality": {
         "openness": 88,
@@ -717,13 +1133,26 @@
         "neuroticism": 45,
         "conscientiousness": 90
       },
-      "biases": ["aesthetics matter", "client experience", "seamless execution"],
-      "interests": ["event design", "vendor management", "interior design", "travel"],
+      "biases": [
+        "aesthetics matter",
+        "client experience",
+        "seamless execution"
+      ],
+      "interests": [
+        "event design",
+        "vendor management",
+        "interior design",
+        "travel"
+      ],
       "social_style": "creative",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-04", "agent-12", "agent-18"],
+        "acquaintances": [
+          "agent-04",
+          "agent-12",
+          "agent-18"
+        ],
         "colleagues": []
       },
       "currently": "Looking for better tools for client event pages"
@@ -734,7 +1163,7 @@
       "age": 33,
       "occupation": "Podcast Host",
       "location": "New York",
-      "avatar": "👨‍🎤",
+      "avatar": "/avatars/ayesha-khan.png",
       "bio": "Hosts a popular tech podcast. Does live event recordings. Influential voice in tech.",
       "personality": {
         "openness": 90,
@@ -743,13 +1172,26 @@
         "neuroticism": 42,
         "conscientiousness": 72
       },
-      "biases": ["content quality", "authentic conversations", "audience growth"],
-      "interests": ["podcasting", "live events", "interviews", "tech"],
+      "biases": [
+        "content quality",
+        "authentic conversations",
+        "audience growth"
+      ],
+      "interests": [
+        "podcasting",
+        "live events",
+        "interviews",
+        "tech"
+      ],
       "social_style": "broadcaster",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-08", "agent-19", "agent-10"],
+        "acquaintances": [
+          "agent-08",
+          "agent-19",
+          "agent-10"
+        ],
         "colleagues": []
       },
       "currently": "Planning a live podcast recording event"
@@ -760,7 +1202,7 @@
       "age": 27,
       "occupation": "Growth PM",
       "location": "San Francisco",
-      "avatar": "👩‍💻",
+      "avatar": "/avatars/wolfgang-schulz.png",
       "bio": "Growth PM at an event platform. Studies user behavior. Data obsessed.",
       "personality": {
         "openness": 82,
@@ -769,13 +1211,26 @@
         "neuroticism": 48,
         "conscientiousness": 88
       },
-      "biases": ["data driven", "user behavior", "conversion optimization"],
-      "interests": ["growth", "product analytics", "A/B testing", "user research"],
+      "biases": [
+        "data driven",
+        "user behavior",
+        "conversion optimization"
+      ],
+      "interests": [
+        "growth",
+        "product analytics",
+        "A/B testing",
+        "user research"
+      ],
       "social_style": "analyst",
       "relationships": {
         "relatives": [],
         "close_friends": [],
-        "acquaintances": ["agent-07", "agent-16", "agent-27"],
+        "acquaintances": [
+          "agent-07",
+          "agent-16",
+          "agent-27"
+        ],
         "colleagues": []
       },
       "currently": "Analyzing event RSVP conversion funnels"

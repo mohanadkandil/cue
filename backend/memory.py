@@ -4,13 +4,20 @@ Memory Stream & Retrieval System
 Handles:
 - Storing memories for each agent
 - Retrieving relevant memories using recency + relevance + importance
-- Keyword-based matching (no embeddings needed)
+- SEMANTIC matching using embeddings (finds related concepts, not just keywords)
 """
 
-import re
 import math
+import numpy as np
 from datetime import datetime
 from dataclasses import dataclass, field
+from sentence_transformers import SentenceTransformer
+
+# Load embedding model ONCE (shared across all agents)
+# all-MiniLM-L6-v2: Small (80MB), fast, good quality
+print("Loading embedding model...")
+_EMBEDDING_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
+print("Embedding model loaded!")
 
 
 @dataclass
@@ -19,74 +26,36 @@ class Memory:
     id: str
     created_at: datetime
     content: str
-    memory_type: str  # "observation", "conversation", "thought", "reaction"
+    memory_type: str  # "observation", "conversation", "thought", "reaction", "reflection"
     poignancy: int = 5  # 1-10, emotional importance
-    keywords: list[str] = field(default_factory=list)  # For retrieval
     related_event_id: str = None
     related_agent_id: str = None
     last_accessed: datetime = None  # Updated when retrieved
 
     def __post_init__(self):
-        # Auto-extract keywords if not provided
-        if not self.keywords:
-            self.keywords = extract_keywords(self.content)
-        # Set last_accessed to creation time initially
         if self.last_accessed is None:
             self.last_accessed = self.created_at
 
 
-def extract_keywords(text: str) -> list[str]:
-    """
-    Extract keywords from text for matching.
-    Simple approach: lowercase words, remove common words.
-    """
-    # Common words to ignore
-    stopwords = {
-        "the", "a", "an", "is", "are", "was", "were", "be", "been",
-        "being", "have", "has", "had", "do", "does", "did", "will",
-        "would", "could", "should", "may", "might", "must", "shall",
-        "can", "to", "of", "in", "for", "on", "with", "at", "by",
-        "from", "as", "into", "through", "during", "before", "after",
-        "above", "below", "between", "under", "again", "further",
-        "then", "once", "here", "there", "when", "where", "why",
-        "how", "all", "each", "few", "more", "most", "other", "some",
-        "such", "no", "nor", "not", "only", "own", "same", "so",
-        "than", "too", "very", "just", "and", "but", "if", "or",
-        "because", "until", "while", "about", "against", "between",
-        "into", "through", "during", "before", "after", "above",
-        "below", "up", "down", "out", "off", "over", "under", "again",
-        "i", "me", "my", "myself", "we", "our", "ours", "ourselves",
-        "you", "your", "yours", "yourself", "he", "him", "his",
-        "himself", "she", "her", "hers", "herself", "it", "its",
-        "itself", "they", "them", "their", "theirs", "themselves",
-        "what", "which", "who", "whom", "this", "that", "these",
-        "those", "am", "been", "being", "having", "doing",
-    }
-
-    # Extract words, lowercase, filter
-    words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
-    keywords = [w for w in words if w not in stopwords]
-
-    # Remove duplicates, keep order
-    seen = set()
-    unique = []
-    for w in keywords:
-        if w not in seen:
-            seen.add(w)
-            unique.append(w)
-
-    return unique
+def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
+    """Calculate cosine similarity between two vectors"""
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 
 class MemoryStream:
     """
     Manages all memories for a single agent.
-    Provides retrieval based on recency, relevance, and importance.
+    Uses SEMANTIC retrieval (embeddings) instead of keyword matching.
+
+    How it works:
+    1. When memory added → generate embedding vector, store both
+    2. When retrieving → embed query, find similar memories by vector similarity
     """
 
     def __init__(self, agent_id: str):
         self.agent_id = agent_id
         self.memories: list[Memory] = []
+        self.embeddings: list[np.ndarray] = []  # Parallel list of embedding vectors
         self._memory_counter = 0
 
     def add(
@@ -94,11 +63,14 @@ class MemoryStream:
         content: str,
         memory_type: str,
         poignancy: int = 5,
-        keywords: list[str] = None,
         related_event_id: str = None,
         related_agent_id: str = None,
     ) -> Memory:
-        """Add a new memory to the stream"""
+        """
+        Add a new memory to the stream.
+
+        Generates embedding at creation time (only once).
+        """
         self._memory_counter += 1
         memory = Memory(
             id=f"{self.agent_id}-mem-{self._memory_counter}",
@@ -106,11 +78,17 @@ class MemoryStream:
             content=content,
             memory_type=memory_type,
             poignancy=poignancy,
-            keywords=keywords or [],
             related_event_id=related_event_id,
             related_agent_id=related_agent_id,
         )
+
+        # Generate embedding for this memory (ONCE, right now)
+        embedding = _EMBEDDING_MODEL.encode(content, convert_to_numpy=True)
+
+        # Store both
         self.memories.append(memory)
+        self.embeddings.append(embedding)
+
         return memory
 
     def retrieve(
@@ -122,16 +100,16 @@ class MemoryStream:
         importance_weight: float = 1.0,
     ) -> list[Memory]:
         """
-        Retrieve most relevant memories for a query.
+        Retrieve most relevant memories for a query using SEMANTIC search.
 
         Scoring formula:
-            score = (recency * w1) + (relevance * w2) + (importance * w3)
+            score = (recency * w1) + (semantic_similarity * w2) + (importance * w3)
 
         Args:
             query: The situation/event to find relevant memories for
             limit: Max number of memories to return
             recency_weight: How much to weight recent memories
-            relevance_weight: How much to weight keyword matches
+            relevance_weight: How much to weight semantic similarity
             importance_weight: How much to weight poignancy
 
         Returns:
@@ -140,22 +118,21 @@ class MemoryStream:
         if not self.memories:
             return []
 
-        query_keywords = set(extract_keywords(query))
+        # Generate embedding for the query
+        query_embedding = _EMBEDDING_MODEL.encode(query, convert_to_numpy=True)
+
         now = datetime.now()
         scored = []
 
-        for memory in self.memories:
+        for i, memory in enumerate(self.memories):
             # 1. Recency score (exponential decay)
             hours_ago = (now - memory.created_at).total_seconds() / 3600
             recency = math.exp(-0.01 * hours_ago)  # Decay factor
 
-            # 2. Relevance score (keyword overlap)
-            memory_keywords = set(memory.keywords)
-            if query_keywords and memory_keywords:
-                overlap = len(query_keywords & memory_keywords)
-                relevance = overlap / len(query_keywords)
-            else:
-                relevance = 0.0
+            # 2. Relevance score (SEMANTIC similarity via embeddings)
+            relevance = cosine_similarity(query_embedding, self.embeddings[i])
+            # Normalize to 0-1 range (cosine sim can be -1 to 1, but usually 0-1 for text)
+            relevance = max(0, relevance)
 
             # 3. Importance score (normalized poignancy)
             importance = memory.poignancy / 10.0
@@ -215,13 +192,14 @@ class MemoryStream:
 
 # Test when run directly
 if __name__ == "__main__":
-    print("Memory Stream Demo\n")
+    print("\nMemory Stream Demo (with Embeddings)\n")
     print("=" * 50)
 
     # Create memory stream for Elena
     stream = MemoryStream("agent-01")
 
-    # Add some memories (simulating a few days)
+    # Add some memories
+    print("Adding memories...")
     stream.add(
         "Signed up for NovaCRM to manage café customers",
         memory_type="observation",
@@ -245,36 +223,51 @@ if __name__ == "__main__":
         poignancy=5,
     )
     stream.add(
-        "Read article about SaaS pricing trends",
-        memory_type="observation",
-        poignancy=4,
+        "Business expenses are getting out of hand",
+        memory_type="thought",
+        poignancy=6,
     )
     stream.add(
-        "Marco mentioned he's evaluating CRM alternatives",
+        "Marco mentioned he's evaluating cheaper alternatives",
         memory_type="conversation",
         poignancy=6,
         related_agent_id="agent-02",
     )
 
-    print(f"Elena has {stream.count()} memories\n")
+    print(f"\nElena has {stream.count()} memories\n")
 
-    # Test keyword extraction
-    print("Keyword extraction test:")
-    test_text = "NovaCRM raised prices by 40% effective next month"
-    keywords = extract_keywords(test_text)
-    print(f"  Text: {test_text}")
-    print(f"  Keywords: {keywords}\n")
+    # Test SEMANTIC retrieval
+    print("=" * 50)
+    print("SEMANTIC Retrieval Test")
+    print("=" * 50)
 
-    # Test retrieval
-    print("Retrieval test - Query: 'NovaCRM price increase'")
+    query = "pricing concerns and money problems"
+    print(f"\nQuery: '{query}'")
     print("-" * 50)
-    results = stream.retrieve("NovaCRM price increase", limit=3)
+
+    results = stream.retrieve(query, limit=4)
     for i, mem in enumerate(results, 1):
+        # Calculate similarity for display
+        query_emb = _EMBEDDING_MODEL.encode(query, convert_to_numpy=True)
+        mem_emb = stream.embeddings[stream.memories.index(mem)]
+        sim = cosine_similarity(query_emb, mem_emb)
+
         print(f"{i}. [{mem.memory_type}] {mem.content}")
-        print(f"   Keywords: {mem.keywords}")
-        print(f"   Poignancy: {mem.poignancy}")
+        print(f"   Similarity: {sim:.2f} | Poignancy: {mem.poignancy}")
         print()
 
-    # Show summary
-    print("Memory stream summary:")
-    print(stream.summarize())
+    # Compare with a different query
+    print("=" * 50)
+    query2 = "social activities with friends"
+    print(f"\nQuery: '{query2}'")
+    print("-" * 50)
+
+    results2 = stream.retrieve(query2, limit=3)
+    for i, mem in enumerate(results2, 1):
+        query_emb = _EMBEDDING_MODEL.encode(query2, convert_to_numpy=True)
+        mem_emb = stream.embeddings[stream.memories.index(mem)]
+        sim = cosine_similarity(query_emb, mem_emb)
+
+        print(f"{i}. [{mem.memory_type}] {mem.content}")
+        print(f"   Similarity: {sim:.2f} | Poignancy: {mem.poignancy}")
+        print()

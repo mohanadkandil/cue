@@ -381,3 +381,158 @@ def claim_tile(agent_id: str, x: int, y: int) -> bool:
     # Add to new tile
     maze.add_event_to_tile(("persona", agent_id, None), x, y)
     return True
+
+
+# =============================================================================
+# Spatial Awareness - Agents perceive nearby agents
+# =============================================================================
+
+VISION_RADIUS = 5  # Tiles an agent can "see"
+
+
+def get_agent_position(agent_id: str) -> Optional[Tuple[int, int]]:
+    """Get an agent's current position"""
+    for y in range(maze.height):
+        for x in range(maze.width):
+            tile = maze.tiles[y][x]
+            for event in tile["events"]:
+                if event[0] == "persona" and event[1] == agent_id:
+                    return (x, y)
+    return None
+
+
+def get_nearby_agents(agent_id: str, radius: int = VISION_RADIUS) -> List[Tuple[str, int, int, float]]:
+    """
+    Find agents within vision radius of an agent.
+
+    Returns:
+        List of (other_agent_id, x, y, distance) tuples, sorted by distance
+    """
+    pos = get_agent_position(agent_id)
+    if not pos:
+        return []
+
+    ax, ay = pos
+    nearby = []
+
+    # Check all tiles within radius
+    for dy in range(-radius, radius + 1):
+        for dx in range(-radius, radius + 1):
+            x, y = ax + dx, ay + dy
+
+            # Skip out of bounds
+            if not (0 <= x < maze.width and 0 <= y < maze.height):
+                continue
+
+            # Calculate distance
+            dist = (dx * dx + dy * dy) ** 0.5
+            if dist > radius:
+                continue
+
+            # Check for agents on this tile
+            tile = maze.tiles[y][x]
+            for event in tile["events"]:
+                if event[0] == "persona" and event[1] != agent_id:
+                    nearby.append((event[1], x, y, dist))
+
+    # Sort by distance
+    nearby.sort(key=lambda x: x[3])
+    return nearby
+
+
+def get_agents_at_same_location(agent_id: str, spatial_states: Dict[str, 'AgentSpatialState']) -> List[str]:
+    """
+    Find agents at the same location as another agent.
+
+    Args:
+        agent_id: The agent to check
+        spatial_states: Dict of agent_id -> AgentSpatialState
+
+    Returns:
+        List of agent IDs at the same location
+    """
+    if agent_id not in spatial_states:
+        return []
+
+    my_location = spatial_states[agent_id].location_id
+    if not my_location:
+        return []
+
+    same_location = []
+    for other_id, other_state in spatial_states.items():
+        if other_id != agent_id and other_state.location_id == my_location:
+            same_location.append(other_id)
+
+    return same_location
+
+
+def perceive_surroundings(
+    agent_id: str,
+    spatial_states: Dict[str, 'AgentSpatialState'],
+    agent_activities: Dict[str, str] = None,
+) -> List[Dict]:
+    """
+    Get what an agent can perceive around them.
+
+    This is the main perception function that returns what the agent "sees".
+
+    Args:
+        agent_id: The perceiving agent
+        spatial_states: Dict of all agent positions
+        agent_activities: Optional dict of agent_id -> current activity
+
+    Returns:
+        List of perception dicts:
+        [
+            {"type": "agent", "agent_id": "klaus", "activity": "writing", "distance": 2.5},
+            ...
+        ]
+    """
+    perceptions = []
+
+    # Get nearby agents
+    nearby = get_nearby_agents(agent_id)
+
+    for other_id, x, y, distance in nearby:
+        perception = {
+            "type": "agent",
+            "agent_id": other_id,
+            "distance": round(distance, 1),
+            "x": x,
+            "y": y,
+        }
+
+        # Add activity if known
+        if agent_activities and other_id in agent_activities:
+            perception["activity"] = agent_activities[other_id]
+
+        # Add location if known
+        if other_id in spatial_states:
+            perception["location"] = spatial_states[other_id].location_id
+
+        perceptions.append(perception)
+
+    return perceptions
+
+
+def get_proximity_pairs(spatial_states: Dict[str, 'AgentSpatialState'], max_distance: int = 3) -> List[Tuple[str, str, float]]:
+    """
+    Get all pairs of agents that are close to each other.
+
+    Useful for frontend to draw proximity lines.
+
+    Returns:
+        List of (agent1_id, agent2_id, distance) tuples
+    """
+    pairs = []
+    agent_ids = list(spatial_states.keys())
+
+    for i, agent1_id in enumerate(agent_ids):
+        nearby = get_nearby_agents(agent1_id, radius=max_distance)
+
+        for other_id, x, y, distance in nearby:
+            # Only add each pair once (agent1 < agent2 alphabetically)
+            if agent1_id < other_id:
+                pairs.append((agent1_id, other_id, distance))
+
+    return pairs

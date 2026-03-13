@@ -24,6 +24,9 @@ from cognition import (
     generate_reaction,
     generate_conversation,
     generate_thought,
+    generate_reflection,
+    generate_daily_plan,
+    decompose_task,
 )
 from spatial import (
     AgentSpatialState,
@@ -33,6 +36,10 @@ from spatial import (
     move_agent_one_step,
     set_agent_target,
     print_agent_positions,
+    get_nearby_agents,
+    get_agents_at_same_location,
+    perceive_surroundings,
+    get_proximity_pairs,
 )
 
 
@@ -55,6 +62,34 @@ class PropagationTask:
 
 
 @dataclass
+class ScheduleBlock:
+    """A single block in an agent's daily schedule"""
+    hour: int
+    duration: int
+    activity: str
+    location: str
+    can_be_interrupted: bool
+    subtasks: list[dict] = field(default_factory=list)  # Decomposed tasks
+
+
+@dataclass
+class DailyPlan:
+    """An agent's plan for the day (LLM-generated)"""
+    agent_id: str
+    day: int  # Simulation day number
+    wake_up_hour: int
+    sleep_hour: int
+    schedule: list[ScheduleBlock] = field(default_factory=list)
+
+    def get_activity_at(self, hour: int) -> ScheduleBlock | None:
+        """Get what the agent is doing at a specific hour"""
+        for block in self.schedule:
+            if block.hour <= hour < block.hour + block.duration:
+                return block
+        return None
+
+
+@dataclass
 class SimulationState:
     """Current state of the simulation"""
     agents: dict[str, Agent]
@@ -65,6 +100,12 @@ class SimulationState:
     propagation_queue: list[PropagationTask] = field(default_factory=list)
     feed_items: list[dict] = field(default_factory=list)  # For frontend live feed
     running: bool = False
+    # Track last reflection time for each agent (for periodic reflection)
+    last_reflection: dict[str, datetime] = field(default_factory=dict)
+    # Dynamic daily plans for each agent (LLM-generated)
+    daily_plans: dict[str, DailyPlan] = field(default_factory=dict)
+    # Track which sim day we're on (for knowing when to regenerate plans)
+    current_day: int = 1
 
 
 class SimulationEngine:
@@ -293,7 +334,7 @@ class SimulationEngine:
     # =========================================================================
 
     def _maybe_trigger_ambient_conversation(self):
-        """Maybe trigger a random conversation between two agents"""
+        """Maybe trigger a conversation between two NEARBY agents"""
         if random.random() > self.ambient_conversation_chance:
             return
 
@@ -308,23 +349,34 @@ class SimulationEngine:
         if len(available) < 2:
             return
 
-        # Pick two connected agents
+        # Pick an agent and find nearby agents (spatial awareness!)
         agent1 = random.choice(available)
-        connections = agent1.relationships.all_connections()
-        available_connections = [
+
+        # Get agents at same location (can actually talk)
+        nearby_ids = get_agents_at_same_location(agent1.id, self.state.agent_positions)
+
+        # Filter to those who can socialize
+        nearby_available = [
             self.state.agents[aid]
-            for aid in connections
+            for aid in nearby_ids
             if aid in self.state.agents and self.state.agents[aid].can_socialize(hour)
         ]
 
-        if not available_connections:
+        if not nearby_available:
             return
 
-        agent2 = random.choice(available_connections)
+        agent2 = random.choice(nearby_available)
 
-        # Generate conversation
+        # Get recent important memories for both agents (natural context)
+        recent1 = self.state.memory_streams[agent1.id].get_recent(limit=3)
+        recent2 = self.state.memory_streams[agent2.id].get_recent(limit=3)
+
+        # Build context with recent memories so LLM knows what's on their mind
         ctx1 = self._get_agent_context(agent1)
+        ctx1.relevant_memories = [m.content for m in recent1 if m.poignancy >= 5]
+
         ctx2 = self._get_agent_context(agent2)
+        ctx2.relevant_memories = [m.content for m in recent2 if m.poignancy >= 5]
 
         print(f"[{self.state.clock.formatted_time}] Ambient: {agent1.name} chats with {agent2.name}")
 
@@ -345,14 +397,245 @@ class SimulationEngine:
             related_agent_id=agent1.id,
         )
 
-        # Add to feed with context
-        self._add_feed_item(
-            f"{agent1.name} chatted with {agent2.name}",
-            item_type="conversation",
-            agent_id=agent1.id,
-            agent_name=agent1.name,
-            thought=f"Topic: {topic}. Mood: {result.get('mood', 'casual')}",
+        # Add to feed - show actual conversation snippet
+        exchanges = result.get("exchanges", [])
+        if exchanges:
+            snippet = exchanges[0].get("message", "")[:100]
+            self._add_feed_item(
+                f"{agent1.name} to {agent2.name}: \"{snippet}\"",
+                item_type="conversation",
+                agent_id=agent1.id,
+                agent_name=agent1.name,
+                thought=f"Topic: {topic}",
+            )
+        else:
+            self._add_feed_item(
+                f"{agent1.name} chatted with {agent2.name} about {topic}",
+                item_type="conversation",
+                agent_id=agent1.id,
+                agent_name=agent1.name,
+            )
+
+    # =========================================================================
+    # Perception - Agents see nearby agents
+    # =========================================================================
+
+    def _process_perception(self):
+        """
+        Agents perceive who's nearby and create observation memories.
+
+        This runs occasionally (not every tick) to avoid too many memories.
+        Agents notice who's around them and what they're doing.
+        """
+        # Get current activities for all agents
+        agent_activities = {}
+        for agent_id, agent in self.state.agents.items():
+            activity = self.get_agent_current_activity(agent_id)
+            agent_activities[agent_id] = activity
+
+        # Each agent perceives surroundings
+        for agent_id, agent in self.state.agents.items():
+            perceptions = perceive_surroundings(
+                agent_id,
+                self.state.agent_positions,
+                agent_activities,
+            )
+
+            # Create observation memories for nearby agents
+            for perception in perceptions[:3]:  # Limit to 3 closest
+                if perception["type"] == "agent":
+                    other_id = perception["agent_id"]
+                    other_agent = self.state.agents.get(other_id)
+
+                    if other_agent:
+                        activity = perception.get("activity", "around")
+                        distance = perception.get("distance", 0)
+
+                        # Only notice if close enough
+                        if distance <= 3:
+                            memory_content = f"Noticed {other_agent.name} {activity} nearby"
+
+                            # Check if we already have a recent similar memory
+                            recent = self.state.memory_streams[agent_id].get_recent(5)
+                            already_noticed = any(
+                                other_agent.name in m.content and "Noticed" in m.content
+                                for m in recent
+                            )
+
+                            if not already_noticed:
+                                self.state.memory_streams[agent_id].add(
+                                    content=memory_content,
+                                    memory_type="observation",
+                                    poignancy=2,
+                                    related_agent_id=other_id,
+                                )
+
+    # =========================================================================
+    # Reflection
+    # =========================================================================
+
+    def _maybe_trigger_reflection(self):
+        """
+        Periodically trigger reflection for agents.
+
+        Reflection happens when:
+        - Agent has accumulated enough memories (>= 10 since last reflection)
+        - OR enough time has passed (e.g., every simulated hour)
+
+        This is what makes agents "understand" their experiences over time.
+        """
+        now = datetime.now()
+
+        for agent_id, agent in self.state.agents.items():
+            stream = self.state.memory_streams[agent_id]
+
+            # Check if agent has enough memories to reflect
+            if stream.count() < 5:
+                continue
+
+            # Check cooldown (don't reflect too often - once per sim hour max)
+            last = self.state.last_reflection.get(agent_id)
+            if last:
+                # In real sim, check sim time. For now, use real time with short cooldown
+                if (now - last).total_seconds() < 60:  # 1 minute real time cooldown
+                    continue
+
+            # Get recent memories for reflection
+            recent = stream.get_recent(limit=10)
+            recent_texts = [m.content for m in recent]
+
+            # Build context
+            ctx = self._get_agent_context(agent)
+
+            # Generate insights
+            insights = generate_reflection(ctx, recent_texts)
+
+            if insights:
+                print(f"[{self.state.clock.formatted_time}] {agent.name} reflects...")
+
+                for insight_data in insights:
+                    insight_text = insight_data.get("insight", "")
+                    importance = insight_data.get("importance", 5)
+
+                    if insight_text:
+                        # Store insight as a high-importance memory
+                        stream.add(
+                            content=f"[Reflection] {insight_text}",
+                            memory_type="reflection",
+                            poignancy=min(importance + 2, 10),  # Reflections are important
+                        )
+
+                        # Add to feed
+                        self._add_feed_item(
+                            f"{agent.name} realized: \"{insight_text}\"",
+                            item_type="reflection",
+                            agent_id=agent.id,
+                            agent_name=agent.name,
+                            thought=insight_text,
+                        )
+
+                        print(f"  → \"{insight_text}\" (importance: {importance})")
+
+            # Update last reflection time
+            self.state.last_reflection[agent_id] = now
+
+    # =========================================================================
+    # Dynamic Planning
+    # =========================================================================
+
+    def _generate_daily_plan_for_agent(self, agent: Agent) -> DailyPlan:
+        """
+        Generate a personalized daily plan for one agent.
+
+        This creates a unique schedule based on their personality,
+        occupation, and recent experiences - unlike static schedules.
+        """
+        ctx = self._get_agent_context(agent)
+
+        # Get yesterday's summary from memories
+        stream = self.state.memory_streams[agent.id]
+        recent = stream.get_recent(limit=5)
+        yesterday_summary = "; ".join([m.content for m in recent]) if recent else None
+
+        # Generate plan via LLM
+        plan_data = generate_daily_plan(ctx, yesterday_summary)
+
+        # Convert to ScheduleBlocks
+        schedule = []
+        for block_data in plan_data.get("schedule", []):
+            block = ScheduleBlock(
+                hour=block_data["hour"],
+                duration=block_data["duration"],
+                activity=block_data["activity"],
+                location=block_data["location"],
+                can_be_interrupted=block_data["can_be_interrupted"],
+            )
+            schedule.append(block)
+
+        return DailyPlan(
+            agent_id=agent.id,
+            day=self.state.current_day,
+            wake_up_hour=plan_data.get("wake_up_hour", 7),
+            sleep_hour=plan_data.get("sleep_hour", 22),
+            schedule=schedule,
         )
+
+    def _maybe_generate_daily_plans(self):
+        """
+        Generate daily plans for all agents at the start of a new day.
+
+        Called when simulation hour is 6 (morning) and plans are outdated.
+        """
+        hour = self.state.clock.hour
+
+        # Only generate plans in the early morning
+        if hour != 6:
+            return
+
+        # Check if we already have plans for today
+        sample_plan = next(iter(self.state.daily_plans.values()), None) if self.state.daily_plans else None
+        if sample_plan and sample_plan.day == self.state.current_day:
+            return  # Already have today's plans
+
+        print(f"\n[{self.state.clock.formatted_time}] === GENERATING DAILY PLANS ===")
+
+        for agent_id, agent in self.state.agents.items():
+            print(f"  Planning {agent.name}'s day...")
+            plan = self._generate_daily_plan_for_agent(agent)
+            self.state.daily_plans[agent_id] = plan
+
+            # Log their schedule
+            for block in plan.schedule[:3]:  # Show first 3 activities
+                print(f"    {block.hour:02d}:00 - {block.activity} @ {block.location}")
+            if len(plan.schedule) > 3:
+                print(f"    ... and {len(plan.schedule) - 3} more activities")
+
+            # Add to feed
+            self._add_feed_item(
+                f"{agent.name} planned their day",
+                item_type="planning",
+                agent_id=agent.id,
+                agent_name=agent.name,
+                thought=f"First activity: {plan.schedule[0].activity}" if plan.schedule else "Resting",
+            )
+
+        print(f"[{self.state.clock.formatted_time}] === PLANS COMPLETE ===\n")
+
+    def get_agent_current_activity(self, agent_id: str) -> str:
+        """
+        Get what an agent is currently doing based on their dynamic plan.
+
+        Falls back to static schedule if no plan exists.
+        """
+        plan = self.state.daily_plans.get(agent_id)
+        if plan:
+            block = plan.get_activity_at(self.state.clock.hour)
+            if block:
+                return block.activity
+
+        # Fallback to static schedule
+        agent = self.state.agents[agent_id]
+        return agent.get_current_activity(self.state.clock.hour).activity
 
     # =========================================================================
     # Event Processing
@@ -388,12 +671,12 @@ class SimulationEngine:
             if agent.can_be_interrupted(hour)
         ]
 
-        # Prioritize high openness agents, but always pick some
+        # 6 agents react immediately
         high_openness = [a for a in available if a.personality.openness > 50]
         if high_openness:
-            perceivers = random.sample(high_openness, min(5, len(high_openness)))
+            perceivers = random.sample(high_openness, min(6, len(high_openness)))
         else:
-            perceivers = random.sample(available, min(5, len(available))) if available else []
+            perceivers = random.sample(available, min(6, len(available))) if available else []
 
         print(f"Early perceivers: {[a.name for a in perceivers]}")
 
@@ -431,16 +714,17 @@ class SimulationEngine:
             related_event_id=event.id,
         )
 
-        # Add to feed with full context
-        sentiment_emoji = {"positive": "😊", "negative": "😠", "neutral": "😐"}.get(reaction["sentiment"], "")
-        self._add_feed_item(
-            f"{agent.name} {sentiment_emoji} reacted to the news",
-            item_type="reaction",
-            agent_id=agent.id,
-            agent_name=agent.name,
-            thought=reaction["thought"],
-            sentiment=reaction["sentiment"],
-        )
+        # Add to feed - show what they actually said (skip empty thoughts)
+        thought = reaction.get("thought", "").strip()
+        if thought and thought != "..." and len(thought) > 10:
+            self._add_feed_item(
+                f"{agent.name}: \"{thought}\"",
+                item_type="reaction",
+                agent_id=agent.id,
+                agent_name=agent.name,
+                thought=thought,
+                sentiment=reaction["sentiment"],
+            )
 
         print(f"    Sentiment: {reaction['sentiment']}")
         print(f"    Thought: {reaction['thought'][:80]}...")
@@ -505,14 +789,26 @@ class SimulationEngine:
         # Advance time
         self.state.clock.tick()
 
+        # Generate daily plans at start of each day (6am)
+        # Disabled for now - too slow, blocks real-time updates
+        # self._maybe_generate_daily_plans()
+
         # Process agent movement (update positions, trigger walks)
         self._process_movement()
+
+        # Agents perceive who's nearby (creates observation memories)
+        if random.random() < 0.15:  # 15% chance per tick
+            self._process_perception()
 
         # Process routine activities (agents living their day)
         self._process_routine_activities()
 
-        # Maybe trigger ambient conversation
+        # Maybe trigger ambient conversation (now uses spatial awareness)
         self._maybe_trigger_ambient_conversation()
+
+        # Maybe trigger reflection (agents forming insights)
+        if random.random() < 0.1:  # 10% chance per tick
+            self._maybe_trigger_reflection()
 
         # Process propagation queue
         self._process_propagation_queue()

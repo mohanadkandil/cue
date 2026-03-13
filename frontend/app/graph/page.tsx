@@ -1,7 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TopNav from '@/components/TopNav';
+import { Send, Loader2 } from 'lucide-react';
+
+interface FeedItem {
+  id: string;
+  timestamp: string;
+  agent_name: string;
+  content: string;
+  type: string;
+}
 import D3ForceGraph, { type AgentNode, type AgentLink } from '@/components/graph/D3ForceGraph';
 
 // Color palette based on location
@@ -99,6 +108,96 @@ const LINKS: AgentLink[] = [
 
 export default function GraphPage() {
   const [selectedAgent, setSelectedAgent] = useState<AgentNode | null>(null);
+  const [feed, setFeed] = useState<FeedItem[]>([]);
+  const [connected, setConnected] = useState(false);
+  const [simTime, setSimTime] = useState('');
+  const [liveAgents, setLiveAgents] = useState<Record<string, any>>({});
+  const [eventInput, setEventInput] = useState('');
+  const [injecting, setInjecting] = useState(false);
+  const hasInjectedRef = useRef(false);
+
+  // Check for sandbox event from output page
+  useEffect(() => {
+    const sandboxEvent = sessionStorage.getItem('agentsim_sandbox_event');
+    if (sandboxEvent && !hasInjectedRef.current) {
+      hasInjectedRef.current = true;
+      // Auto-inject the event from poll results
+      setTimeout(() => {
+        injectEvent(sandboxEvent);
+        sessionStorage.removeItem('agentsim_sandbox_event');
+      }, 1500); // Wait for connection
+    }
+  }, [connected]);
+
+  const injectEvent = async (content: string) => {
+    if (!content.trim() || injecting) return;
+
+    setInjecting(true);
+    try {
+      const response = await fetch('http://localhost:8000/inject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content }),
+      });
+      const data = await response.json();
+      console.log('Injected:', data);
+      setEventInput('');
+    } catch (error) {
+      console.error('Inject failed:', error);
+    } finally {
+      setInjecting(false);
+    }
+  };
+
+  // SSE connection to backend - simpler and auto-reconnects
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:8000/events');
+
+    eventSource.onopen = () => {
+      console.log('[SSE] Connected');
+      setConnected(true);
+    };
+
+    eventSource.onmessage = (event) => {
+      try {
+        const state = JSON.parse(event.data);
+        const serverFeed = state.feed || [];
+
+        // Merge new items, preserve history
+        setFeed(prev => {
+          const existingIds = new Set(prev.map(f => f.id));
+          const newItems = serverFeed.filter((f: FeedItem) => !existingIds.has(f.id));
+          if (newItems.length > 0) {
+            const merged = [...newItems, ...prev];
+            return merged.slice(0, 100);
+          }
+          return prev;
+        });
+        setSimTime(state.time || '');
+
+        // Update live agent data (activity, sentiment, location)
+        if (state.agents) {
+          const agentMap: Record<string, any> = {};
+          state.agents.forEach((a: any) => {
+            agentMap[a.name.toLowerCase().replace(/\s+/g, '-')] = a;
+          });
+          setLiveAgents(agentMap);
+        }
+      } catch (e) {
+        console.error('[SSE] Parse error:', e);
+      }
+    };
+
+    eventSource.onerror = () => {
+      console.log('[SSE] Connection lost, reconnecting...');
+      setConnected(false);
+      // EventSource auto-reconnects!
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-[#F7F6F3]">
@@ -112,6 +211,7 @@ export default function GraphPage() {
             links={LINKS}
             onNodeClick={setSelectedAgent}
           />
+
 
           {/* Legend */}
           <div className="absolute bottom-6 left-6 bg-white rounded-[12px] border border-[#F0EFEC] shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4">
@@ -128,7 +228,13 @@ export default function GraphPage() {
 
           {/* Stats */}
           <div className="absolute top-6 right-6 bg-white rounded-[12px] border border-[#F0EFEC] shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4">
-            <div className="text-[11px] font-semibold text-[#8E8E93] mb-3">SIMULATION</div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-[11px] font-semibold text-[#8E8E93]">SIMULATION</div>
+              <div className="flex items-center gap-1.5">
+                <div className={`w-2 h-2 rounded-full ${connected ? 'bg-[#22C55E] animate-pulse' : 'bg-[#8E8E93]'}`} />
+                <span className="text-[10px] text-[#8E8E93]">{connected ? simTime || 'Live' : 'Offline'}</span>
+              </div>
+            </div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-4">
                 <span className="text-[12px] text-[#6B6B6B]">Agents</span>
@@ -141,9 +247,63 @@ export default function GraphPage() {
             </div>
           </div>
 
-          {/* Instructions */}
-          <div className="absolute bottom-6 right-6 bg-white/80 backdrop-blur rounded-[8px] px-3 py-2">
-            <span className="text-[10px] text-[#8E8E93]">Drag nodes • Scroll to zoom • Click for details</span>
+          {/* Event Injector - Bottom Center */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+            <div className="bg-white/90 backdrop-blur-sm rounded-full border border-[#E5E5E5] shadow-sm px-4 py-2 flex items-center gap-2 w-[340px]">
+              <input
+                type="text"
+                value={eventInput}
+                onChange={(e) => setEventInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    injectEvent(eventInput);
+                  }
+                }}
+                placeholder="Announce something..."
+                className="flex-1 text-[12px] text-[#2D2D2D] placeholder-[#AEAEB2] bg-transparent outline-none"
+                disabled={injecting}
+              />
+              <button
+                onClick={() => injectEvent(eventInput)}
+                disabled={!eventInput.trim() || injecting}
+                className="flex items-center justify-center w-7 h-7 rounded-full bg-[#7C9070] text-white hover:bg-[#6A7D60] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {injecting ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Send className="w-3.5 h-3.5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Live Feed - Bottom Right Vertical Stack */}
+          <div className="absolute bottom-6 right-6 flex flex-col gap-3 w-[300px] max-h-[450px] overflow-y-auto">
+            {feed.slice(0, 20).map((item, i) => (
+              <div
+                key={item.id || i}
+                className="bg-white rounded-[12px] border border-[#E5E5E5] shadow-[0_4px_12px_rgba(0,0,0,0.08)] px-4 py-3"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    item.type === 'conversation' ? 'bg-[#7C9070]' :
+                    item.type === 'thought' ? 'bg-[#5B9BD5]' :
+                    item.type === 'reaction' ? 'bg-[#E9C46A]' :
+                    item.type === 'event' ? 'bg-[#E07A5F]' :
+                    'bg-[#9B8AA8]'
+                  }`} />
+                  <span className="text-[12px] font-semibold text-[#2D2D2D]">{item.agent_name || '📢 Event'}</span>
+                  <span className="text-[10px] text-[#8E8E93] ml-auto">{item.type}</span>
+                </div>
+                <div className="text-[13px] text-[#4A4A4A] leading-relaxed">{item.content}</div>
+              </div>
+            ))}
+            {feed.length === 0 && connected && (
+              <div className="bg-white/80 rounded-[12px] px-4 py-3 text-[12px] text-[#8E8E93]">
+                Waiting for activity...
+              </div>
+            )}
           </div>
         </div>
 
@@ -183,28 +343,50 @@ export default function GraphPage() {
                 </button>
               </div>
 
-              {/* Activity */}
-              <div className="bg-[#F7F6F3] rounded-[10px] p-4">
-                <div className="text-[11px] font-semibold text-[#8E8E93] mb-2">CURRENT ACTIVITY</div>
-                <div className="text-[13px] text-[#2D2D2D]">{selectedAgent.activity}</div>
-              </div>
+              {/* Activity - Live from backend */}
+              {(() => {
+                const live = liveAgents[selectedAgent.id];
+                return (
+                  <div className="bg-[#F7F6F3] rounded-[10px] p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-[11px] font-semibold text-[#8E8E93]">CURRENT ACTIVITY</div>
+                      {live?.can_socialize && (
+                        <span className="text-[9px] bg-[#E8F5E9] text-[#7C9070] px-1.5 py-0.5 rounded-full">Available</span>
+                      )}
+                    </div>
+                    <div className="text-[13px] text-[#2D2D2D]">{live?.activity || selectedAgent.activity}</div>
+                    {live?.location && (
+                      <div className="text-[11px] text-[#8E8E93] mt-1">📍 {live.location}</div>
+                    )}
+                    {live?.current_thought && (
+                      <div className="text-[11px] text-[#6B6B6B] mt-2 italic">"{live.current_thought}"</div>
+                    )}
+                  </div>
+                );
+              })()}
 
-              {/* Sentiment */}
-              <div>
-                <div className="text-[11px] font-semibold text-[#8E8E93] mb-2">SENTIMENT</div>
-                <div className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor:
-                        selectedAgent.sentiment === 'positive' ? '#22C55E' :
-                        selectedAgent.sentiment === 'negative' ? '#EF4444' :
-                        selectedAgent.sentiment === 'curious' ? '#5B9BD5' : '#9B8AA8'
-                    }}
-                  />
-                  <span className="text-[13px] capitalize text-[#2D2D2D]">{selectedAgent.sentiment}</span>
-                </div>
-              </div>
+              {/* Sentiment - Live */}
+              {(() => {
+                const live = liveAgents[selectedAgent.id];
+                const sentiment = live?.sentiment || selectedAgent.sentiment;
+                return (
+                  <div>
+                    <div className="text-[11px] font-semibold text-[#8E8E93] mb-2">SENTIMENT</div>
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{
+                          backgroundColor:
+                            sentiment === 'positive' ? '#22C55E' :
+                            sentiment === 'negative' ? '#EF4444' :
+                            sentiment === 'curious' ? '#5B9BD5' : '#9B8AA8'
+                        }}
+                      />
+                      <span className="text-[13px] capitalize text-[#2D2D2D]">{sentiment}</span>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Connections */}
               <div>
